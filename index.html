@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>팀JJ피트니스 | TEAM JJ FITNESS</title>
-<meta name="description" content="진짜 프리미엄을 경험하라. 해외 명품 머신 100종 이상, 24시간 운영. 팀JJ피트니스 옥계점·대곡점·형곡점.">
+<meta name="description" content="진짜 프리미엄을 경험하라. 해외 명품 머신 100종 이상, 24시간 운영. 팀JJ피트니스 옥계점·대곡점·형곡점·봉곡점.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="팀JJ피트니스 | TEAM JJ FITNESS">
-<meta property="og:description" content="Experience Real Premium — 옥계점 · 대곡점 · 형곡점">
+<meta property="og:description" content="Experience Real Premium — 옥계점 · 대곡점 · 형곡점 · 봉곡점">
 <meta property="og:image" content="images/og.jpg">
 <link rel="icon" href="images/logo-full.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -53,31 +53,26 @@
   <div class="hero-dots" id="heroDots" role="tablist" aria-label="메인 슬라이드"></div>
 
   <!-- BRANCH CARDS -->
-  <section class="branches" id="branches" aria-label="지점">
-    <a class="bcard" href="#find" data-branch="okgye">
-      <img src="images/card-okgye.jpg" alt="팀JJ피트니스 옥계점 내부" loading="lazy">
-      <div class="bcard-txt">
-        <strong>OKGYE<br>PREMIUM 400</strong>
-        <span>팀JJ피트니스 옥계점<br>경북 구미시 옥계동 · 24시간</span>
-      </div>
-      <img class="bcard-logo" src="images/logo-word.png" alt="">
+  <section class="branches" id="branches" aria-labelledby="brTit">
+    <h2 class="big-tit" id="brTit">OUR<br>BRANCHES</h2>
+    <div class="bc-grid">
+    <a class="bcircle" href="#find" data-branch="okgye">
+      <span class="bc-img"><img src="images/br-okgye.jpg" alt="팀JJ피트니스 옥계점 내부" loading="lazy"></span>
+      <span class="bc-txt"><strong>OKGYE</strong><b>옥계점</b><small>구미 옥계동</small></span>
     </a>
-    <a class="bcard" href="#find" data-branch="daegok">
-      <img src="images/card-daegok.jpg" alt="팀JJ피트니스 대곡점 내부" loading="lazy">
-      <div class="bcard-txt">
-        <strong>DAEGOK<br>PREMIUM 500</strong>
-        <span>팀JJ피트니스 대곡점<br>대구 달서구 도원동 · 24시간</span>
-      </div>
-      <img class="bcard-logo" src="images/logo-word.png" alt="">
+    <a class="bcircle" href="#find" data-branch="daegok">
+      <span class="bc-img"><img src="images/br-daegok.jpg" alt="팀JJ피트니스 대곡점 내부" loading="lazy"></span>
+      <span class="bc-txt"><strong>DAEGOK</strong><b>대곡점</b><small>대구 도원동</small></span>
     </a>
-    <a class="bcard" href="#find" data-branch="hyeonggok">
-      <img src="images/card-hyeonggok.jpg" alt="팀JJ피트니스 형곡점 내부" loading="lazy">
-      <div class="bcard-txt">
-        <strong>HYEONGGOK<br>PREMIUM 400</strong>
-        <span>팀JJ피트니스 형곡점<br>경북 구미시 형곡동 · 평일 24시간</span>
-      </div>
-      <img class="bcard-logo" src="images/logo-word.png" alt="">
+    <a class="bcircle" href="#find" data-branch="hyeonggok">
+      <span class="bc-img"><img src="images/br-hyeonggok.jpg" alt="팀JJ피트니스 형곡점 내부" loading="lazy"></span>
+      <span class="bc-txt"><strong>HYEONGGOK</strong><b>형곡점</b><small>구미 형곡동</small></span>
     </a>
+    <a class="bcircle" href="#find" data-branch="bonggok">
+      <span class="bc-img"><img src="images/br-bonggok.jpg" alt="팀JJ피트니스 봉곡점 내부" loading="lazy"></span>
+      <span class="bc-txt"><strong>BONGGOK</strong><b>봉곡점</b><small>구미 봉곡동</small></span>
+    </a>
+    </div>
   </section>
 
   <!-- FIND -->
@@ -94,6 +89,9 @@
         </button>
         <button class="find-tab" role="tab" aria-selected="false" data-branch="hyeonggok">
           <b>형곡점</b><small>경북 구미시 신시로7길 12-12 3층</small><i>→</i>
+        </button>
+        <button class="find-tab" role="tab" aria-selected="false" data-branch="bonggok">
+          <b>봉곡점</b><small>경북 구미시 봉곡남로 103 2층</small><i>→</i>
         </button>
       </div>
 
@@ -185,6 +183,44 @@
             <a class="btn" href="https://blog.naver.com/teamjj0428" target="_blank" rel="noopener">블로그</a>
           </div>
         </article>
+        <!-- 봉곡점 -->
+        <article class="panel" data-branch="bonggok" role="tabpanel" hidden>
+          <div class="panel-map" data-map="36.1499834,128.3132494"></div>
+          <div class="panel-head">
+            <h3>팀JJ피트니스 봉곡점</h3>
+            <p>봉곡동 유일 해외 명품 머신 센터. 해머스트렝스 · 라이프피트니스 · 싸이벡스 · 너틸러스 · 부티빌더, 혼자서도 운동할 수 있게 기초부터 잡아주는 보디빌딩식 PT.</p>
+          </div>
+          <dl class="panel-info">
+            <div><dt>주소</dt><dd>경북 구미시 봉곡남로 103 2층<br><em>봉곡동 테마공원 옆 새마을금고 건물</em></dd></div>
+            <div><dt>운영</dt><dd>월 08시 ~ 토 20시 24시간<br><em>매주 일요일 휴무</em></dd></div>
+            <div><dt>주차</dt><dd>건물 뒤편 건물 주차장</dd></div>
+            <div><dt>전화</dt><dd><a href="tel:050713850910">0507-1385-0910</a></dd></div>
+          </dl>
+          <div class="price" data-price>
+            <p class="price-tit">MEMBERSHIP <em>운동복 + 수건 포함 · 대학생 3개월 150,000원 (학생증 지참)</em></p>
+            <ul>
+              <li><span>1개월</span><b>80,000</b></li>
+              <li><span>3개월</span><b>170,000</b></li>
+              <li><span>6개월</span><b>300,000</b></li>
+            </ul>
+          </div>
+          <div class="price">
+            <p class="price-tit">PERSONAL TRAINING <em>체험 레슨 50분 · 1회 한정</em></p>
+            <ul>
+              <li><span>체험 레슨</span><b>30,000</b></li>
+              <li><span>PT 8회</span><b>400,000</b></li>
+              <li><span>PT 16회</span><b>720,000</b></li>
+              <li><span>PT 24회</span><b>960,000</b></li>
+            </ul>
+          </div>
+          <div class="panel-btns">
+            <a class="btn red" href="https://m.booking.naver.com/booking/13/bizes/800549" target="_blank" rel="noopener">네이버 상담 예약</a>
+            <a class="btn" href="tel:050713850910">전화하기</a>
+            <a class="btn" href="https://map.naver.com/p/entry/place/1848533333" target="_blank" rel="noopener">네이버 지도</a>
+            <a class="btn" href="https://www.instagram.com/teamjjfitness_bonggok" target="_blank" rel="noopener">인스타그램</a>
+            <a class="btn" href="https://blog.naver.com/hsbea" target="_blank" rel="noopener">블로그</a>
+          </div>
+        </article>
       </div>
     </div>
   </section>
@@ -224,6 +260,7 @@
           <li><a href="#find" data-branch="okgye">옥계점</a><span>경북 구미시 옥계북로 22 · 0507-1486-8853</span></li>
           <li><a href="#find" data-branch="daegok">대곡점</a><span>대구 달서구 도원로 36 · 0507-1395-0089</span></li>
           <li><a href="#find" data-branch="hyeonggok">형곡점</a><span>경북 구미시 신시로7길 12-12 · 0507-1381-6729</span></li>
+          <li><a href="#find" data-branch="bonggok">봉곡점</a><span>경북 구미시 봉곡남로 103 · 0507-1385-0910</span></li>
         </ul>
       </div>
     </div>
@@ -233,6 +270,7 @@
     <a href="#find" data-branch="okgye">옥계점</a>
     <a href="#find" data-branch="daegok">대곡점</a>
     <a href="#find" data-branch="hyeonggok">형곡점</a>
+    <a href="#find" data-branch="bonggok">봉곡점</a>
     <a href="https://www.instagram.com/teamjjfitness" target="_blank" rel="noopener">인스타그램</a>
     <a href="#find">상담 예약</a>
   </nav>

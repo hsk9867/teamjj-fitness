@@ -62,7 +62,7 @@
   }
   tabs.forEach(function (t) { t.addEventListener('click', function () { select(t.dataset.branch); }); });
 
-  // 카드·푸터 링크 → 해당 지점 선택
+  // 원형 버튼·푸터 링크 → 해당 지점 선택
   document.querySelectorAll('a[data-branch]').forEach(function (a) {
     a.addEventListener('click', function () { select(a.dataset.branch); });
   });
@@ -86,16 +86,17 @@
   }
 
   // 스크롤 등장
-  var els = document.querySelectorAll('.bcard, .big-tit, .find-wrap, .grid figure');
+  var els = document.querySelectorAll('.bcircle, .big-tit, .find-wrap, .grid figure');
   if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
     var io = new IntersectionObserver(function (es) {
       es.forEach(function (e) {
         if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
       });
     }, { threshold: .12 });
-    els.forEach(function (el, i) {
+    var n = 0;
+    els.forEach(function (el) {
       el.classList.add('rv');
-      if (el.classList.contains('bcard')) el.style.transitionDelay = (i % 3) * 0.12 + 's';
+      if (el.classList.contains('bcircle')) el.style.transitionDelay = (n++ % 4) * 0.1 + 's';
       io.observe(el);
     });
   }
