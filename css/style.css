@@ -178,15 +178,22 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   .hd-nav { position: fixed; top: var(--hd); left: 0; right: 0; bottom: 0; transform: none; flex-direction: column; gap: 0; padding: 20px var(--gut); background: var(--bg); visibility: hidden; opacity: 0; transition: opacity .25s, visibility .25s; }
   .hd-nav.open { visibility: visible; opacity: 1; }
   .hd-nav a { font-size: 22px; font-weight: 700; color: #ddd; padding: 16px 0; border-bottom: 1px solid var(--line); }
-  .hero { height: 560px; }
+  .hero { height: 380px; }
   .hero::after { background: linear-gradient(0deg, rgba(0,0,0,.8) 0%, rgba(0,0,0,.25) 60%, rgba(0,0,0,.2) 100%); }
-  .hero-in { justify-content: flex-end; padding: 0 var(--gut) 40px; }
-  .branches { padding-top: 28px; padding-bottom: 24px; }
-  .bc-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .hero-in { justify-content: flex-end; padding: 0 var(--gut) 26px; }
+  .hero-tit { font-size: 40px; }
+  .hero-sub { margin-top: 12px; font-size: 15px; }
+  .hero-btns { margin-top: 16px; }
+  .pill { height: 40px; padding: 0 14px; font-size: 13px; }
+  .hero-dots { padding-top: 12px; }
+  .branches { padding-top: 14px; padding-bottom: 20px; }
+  .bc-grid { grid-template-columns: repeat(4, 1fr); gap: 8px; }
   .marquee-track { animation-duration: 28s; }
-  .bc-txt { padding: 0 6%; }
-  .bc-txt strong { font-size: clamp(16px, 5vw, 24px); }
-  .bc-txt b { font-size: 15px; margin-top: 6px; }
+  .brands { padding-top: 16px; }
+  .bc-txt { padding: 0 4%; }
+  .bc-txt strong { font-size: clamp(10px, 2.9vw, 13px); }
+  .bc-txt b { font-size: 11px; margin-top: 3px; }
+  .bc-txt small { display: none; }
   .find-list { grid-template-columns: repeat(2, 1fr); }
   .panel-map { aspect-ratio: 4 / 3; }
   .panel-info { grid-template-columns: 1fr; }
