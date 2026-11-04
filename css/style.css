@@ -53,16 +53,15 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 /* branch circles */
 .branches { max-width: 1400px; margin: 0 auto; padding: clamp(40px, 5vw, 80px) var(--gut) clamp(40px, 5vw, 80px); }
 .bc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(16px, 2.4vw, 40px); }
-.bcircle { position: relative; display: block; aspect-ratio: 1; border-radius: 50%; isolation: isolate; }
-.bc-img { position: absolute; inset: 0; border-radius: 50%; overflow: hidden; isolation: isolate; transform: translateZ(0); background: #111; box-shadow: 0 0 0 1px rgba(255,255,255,.22); transition: box-shadow .4s; }
-.bc-img img { position: relative; z-index: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) contrast(1.1) brightness(.6); transition: transform .8s cubic-bezier(.2,.7,.2,1), filter .5s; }
-.bc-img::after { content: ""; position: absolute; inset: 0; z-index: 2; background: radial-gradient(circle, rgba(0,0,0,.25) 0%, rgba(0,0,0,.6) 75%); }
-.bc-txt { position: absolute; inset: 0; z-index: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 10%; }
-.bc-txt strong { font-family: var(--en); font-style: italic; font-weight: 900; font-size: clamp(22px, 2.5vw, 40px); line-height: 1; letter-spacing: -.01em; }
-.bc-txt b { margin-top: clamp(8px, .8vw, 12px); font-size: clamp(15px, 1.3vw, 20px); font-weight: 800; }
-.bc-txt small { margin-top: 4px; font-size: clamp(12px, .9vw, 14px); font-weight: 600; color: rgba(255,255,255,.75); }
+.bcircle { position: relative; display: block; text-align: center; }
+.bc-img { position: relative; display: block; aspect-ratio: 1; border-radius: 50%; overflow: hidden; isolation: isolate; transform: translateZ(0); background: #111; box-shadow: 0 0 0 1px rgba(255,255,255,.22); transition: box-shadow .4s; }
+.bc-img img { display: block; width: 100%; height: 100%; object-fit: cover; filter: brightness(.95); transition: transform .8s cubic-bezier(.2,.7,.2,1), filter .5s; }
+.bc-txt { display: flex; flex-direction: column; align-items: center; margin-top: clamp(12px, 1.2vw, 18px); }
+.bc-txt strong { display: none; }
+.bc-txt b { font-size: clamp(15px, 1.3vw, 20px); font-weight: 800; letter-spacing: -.01em; }
+.bc-txt small { margin-top: 4px; font-size: clamp(12px, .9vw, 14px); font-weight: 500; color: var(--tx2); }
 .bcircle:hover .bc-img, .bcircle:focus-visible .bc-img { box-shadow: 0 0 0 3px #fff, 0 0 40px rgba(255,255,255,.18); }
-.bcircle:hover .bc-img img { transform: scale(1.08); filter: grayscale(0) contrast(1.05) brightness(.7); }
+.bcircle:hover .bc-img img { transform: scale(1.08); filter: brightness(1); }
 
 /* machine brand marquee */
 .brands { padding: clamp(30px, 4vw, 60px) 0 clamp(70px, 8vw, 120px); overflow: hidden; }
@@ -128,8 +127,8 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .inside { max-width: 1760px; margin: 0 auto; padding: 0 var(--gut) clamp(100px, 10vw, 160px); }
 .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; }
 .grid figure { position: relative; margin: 0; aspect-ratio: 4 / 5; overflow: hidden; background: #111; }
-.grid img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) contrast(1.1) brightness(.9); transition: filter .6s, transform .8s cubic-bezier(.2,.7,.2,1); }
-.grid figure:hover img:first-child { filter: grayscale(0) brightness(.95); transform: scale(1.03); }
+.grid img { width: 100%; height: 100%; object-fit: cover; filter: brightness(.92); transition: filter .6s, transform .8s cubic-bezier(.2,.7,.2,1); }
+.grid figure:hover img:first-child { filter: brightness(1); transform: scale(1.03); }
 .grid .mark::after { content: ""; position: absolute; inset: 0; background: rgba(0,0,0,.25); }
 .grid .mark-logo { position: absolute; z-index: 1; left: 50%; top: 50%; width: 46%; height: auto; transform: translate(-50%, -50%); filter: none; pointer-events: none; }
 .grid .mark:hover .mark-logo { transform: translate(-50%, -50%); }
@@ -190,10 +189,9 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   .bc-grid { grid-template-columns: repeat(4, 1fr); gap: 8px; }
   .marquee-track { animation-duration: 28s; }
   .brands { padding-top: 16px; }
-  .bc-txt { padding: 0 4%; }
-  .bc-txt strong { font-size: clamp(10px, 2.9vw, 13px); }
-  .bc-txt b { font-size: 11px; margin-top: 3px; }
-  .bc-txt small { display: none; }
+  .bc-txt { margin-top: 8px; }
+  .bc-txt b { font-size: 12px; }
+  .bc-txt small { font-size: 10px; margin-top: 2px; }
   .find-list { grid-template-columns: repeat(2, 1fr); }
   .panel-map { aspect-ratio: 4 / 3; }
   .panel-info { grid-template-columns: 1fr; }
@@ -305,6 +303,6 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   .pt-cta { padding: 18px 16px; }
   .pt-cta .btn { flex: 1 1 100%; }
   .others .bc-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
-  .others .bc-txt b, .others .bc-txt small { display: none; }
-  .others .bc-txt strong { font-size: 13px; }
+  .others .bc-txt small { display: none; }
+  .others .bc-txt b { font-size: 13px; }
 }
