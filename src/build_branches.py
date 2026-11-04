@@ -236,7 +236,6 @@ def build(b):
     <a href="#price">가격안내</a>
     <a href="#hours">운영시간</a>
   </nav>
-  <a class="hd-cta" href="{cta}"{cta_blank}>상담 예약</a>
   <button class="hd-burger" id="burger" aria-label="메뉴 열기" aria-expanded="false"><span></span><span></span></button>
 </header>
 

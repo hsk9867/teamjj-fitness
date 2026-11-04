@@ -25,9 +25,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .hd-nav { position: absolute; left: 50%; transform: translateX(-50%); display: flex; gap: 36px; }
 .hd-nav a { font-size: 15px; color: var(--tx2); transition: color .2s; }
 .hd-nav a:hover { color: #fff; }
-.hd-cta { margin-left: auto; background: var(--red); color: #fff; font-size: 14px; font-weight: 700; padding: 9px 16px; border-radius: 3px; transition: background .2s; }
-.hd-cta:hover { background: #d81518; }
-.hd-burger { display: none; width: 40px; height: 40px; margin-left: 10px; position: relative; }
+.hd-burger { display: none; width: 40px; height: 40px; margin-left: auto; position: relative; }
 .hd-burger span { position: absolute; left: 10px; right: 10px; height: 2px; background: #fff; transition: transform .25s; }
 .hd-burger span:first-child { top: 15px; }
 .hd-burger span:last-child { top: 23px; }
@@ -174,7 +172,6 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   :root { --hd: 56px; --gut: 16px; }
   .hd-logo img { height: 26px; }
   .hd-burger { display: block; }
-  .hd-cta { padding: 8px 12px; font-size: 13px; }
   .hd-nav { position: fixed; top: var(--hd); left: 0; right: 0; bottom: 0; transform: none; flex-direction: column; gap: 0; padding: 20px var(--gut); background: var(--bg); visibility: hidden; opacity: 0; transition: opacity .25s, visibility .25s; }
   .hd-nav.open { visibility: visible; opacity: 1; }
   .hd-nav a { font-size: 22px; font-weight: 700; color: #ddd; padding: 16px 0; border-bottom: 1px solid var(--line); }
