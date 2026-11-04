@@ -325,7 +325,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .zone-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 14px; }
 .zone-head h3 { margin: 0; font-size: clamp(20px, 2vw, 26px); font-weight: 800; }
 .zone-head h3 em { margin-left: 10px; font-family: var(--en); font-style: italic; font-weight: 700; font-size: 13px; color: var(--red); letter-spacing: .06em; }
-.zone-cnt { font-family: var(--en); font-weight: 600; font-size: 13px; color: var(--tx2); letter-spacing: .04em; }
+.zone-cnt { font-family: var(--en); font-weight: 600; font-size: 13px; color: var(--tx2); letter-spacing: .04em; white-space: nowrap; }
 .zone-cnt b { color: #fff; }
 .zslider { position: relative; }
 .ztrack { display: flex; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; scrollbar-width: none; padding-bottom: 2px; }
@@ -403,4 +403,20 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 @media (prefers-reduced-motion: reduce) {
   .ln > span, .w, .hero-sub, .bhero-sub, .bhero-chips { transform: none; opacity: 1; transition: none; }
   .intro-l2 { clip-path: none; letter-spacing: -.02em; transition: none; }
+}
+
+/* member reviews */
+.reviews { max-width: 1400px; margin: 0 auto; padding: 0 var(--gut) clamp(100px, 10vw, 160px); }
+.rev-card { aspect-ratio: auto; display: flex; flex-direction: column; gap: 14px; padding: 26px 24px 24px; background: #0a0a0a; border: 1px solid var(--line2); border-radius: 4px; }
+.rev-stars { display: flex; gap: 2px; }
+.rev-stars svg { width: 16px; height: 16px; fill: var(--red); }
+.rev-card blockquote { margin: 0; flex: 1; font-size: 15px; line-height: 1.75; color: #e6e6e6; word-break: keep-all; }
+.rev-card blockquote::before { content: "\201C"; display: block; font-family: var(--en); font-size: 40px; line-height: .6; color: var(--red); margin-bottom: 8px; }
+.rev-tags { list-style: none; display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; }
+.rev-tags li { padding: 5px 9px; border-radius: 3px; background: #161616; font-size: 12px; font-weight: 600; color: #bbb; }
+.rev-card figcaption { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; padding-top: 14px; border-top: 1px solid var(--line); }
+.rev-card figcaption b { font-size: 14px; }
+.rev-card figcaption span { font-size: 12px; color: var(--tx2); }
+@media (max-width: 860px) {
+  .rev-card { flex-basis: 86%; padding: 20px 18px; }
 }
