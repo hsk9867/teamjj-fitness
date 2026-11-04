@@ -46,7 +46,7 @@
   mark();
 
   // 스크롤 등장
-  var els = document.querySelectorAll('.fac, .big-tit, .price-wrap, .hours-wrap, .bcircle');
+  var els = document.querySelectorAll('.zone, .big-tit, .price-wrap, .hours-wrap, .bcircle');
   if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
     var io = new IntersectionObserver(function (es) {
       es.forEach(function (e) {
@@ -56,8 +56,32 @@
     var n = 0;
     els.forEach(function (el) {
       el.classList.add('rv');
-      if (el.classList.contains('fac') || el.classList.contains('bcircle')) el.style.transitionDelay = (n++ % 3) * 0.08 + 's';
+      if (el.classList.contains('zone') || el.classList.contains('bcircle')) el.style.transitionDelay = (n++ % 3) * 0.08 + 's';
       io.observe(el);
     });
   }
+})();
+
+// 시설 존 사진 슬라이드
+(function () {
+  document.querySelectorAll('.zone').forEach(function (zone) {
+    var track = zone.querySelector('.ztrack');
+    var prev = zone.querySelector('.zarrow.prev');
+    var next = zone.querySelector('.zarrow.next');
+    var cnt = zone.querySelector('.zone-cnt b');
+    if (!track || !prev) return;
+    var slides = track.querySelectorAll('.zslide');
+    function step() { return slides[0].getBoundingClientRect().width + 10; }
+    function update() {
+      var max = track.scrollWidth - track.clientWidth - 2;
+      prev.disabled = track.scrollLeft <= 2;
+      next.disabled = track.scrollLeft >= max;
+      if (cnt) cnt.textContent = Math.min(slides.length, Math.round(track.scrollLeft / step()) + 1);
+    }
+    prev.addEventListener('click', function () { track.scrollBy({ left: -step(), behavior: 'smooth' }); });
+    next.addEventListener('click', function () { track.scrollBy({ left: step(), behavior: 'smooth' }); });
+    track.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  });
 })();

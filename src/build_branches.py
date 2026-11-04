@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """지점 소개 페이지 생성기: python src/build_branches.py → okgye.html 등 4개 파일.
    데이터는 아래 BRANCHES 를 고치고 다시 실행하면 됨 (가격·운영시간은 네이버 플레이스 2026-10/11 기준)."""
-import os
+import glob, os
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 
@@ -118,11 +118,10 @@ BRANCHES = [
 ]
 
 ZONES = [
-  ('machine', '머신존', 'MACHINE ZONE', 'big'),
-  ('free',    '프리웨이트존', 'FREE WEIGHT', 'big'),
-  ('cardio',  '유산소존', 'CARDIO', 'small'),
-  ('locker',  '탈의실', 'LOCKER ROOM', 'small'),
-  ('shower',  '샤워장', 'SHOWER', 'small'),
+  ('machine', '머신존', 'MACHINE ZONE'),
+  ('free',    '프리웨이트존', 'FREE WEIGHT'),
+  ('cardio',  '유산소존', 'CARDIO'),
+  ('locker',  '탈의실', 'LOCKER ROOM'),
 ]
 PH_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3.5"/><path d="M8 5l1.2-2h5.6L16 5"/></svg>'
 
@@ -158,18 +157,26 @@ def build(b):
     cta = b['booking'] or tel_href(b['tel'])
     cta_blank = ' target="_blank" rel="noopener"' if b['booking'] else ''
 
-    # 시설
+    # 시설: 존별 사진 슬라이드 (images/fac/<key>-<zone>-NN.jpg, src/prep_fac_photos.py 로 생성)
     facs = []
-    for i, (zk, ko, en, size) in enumerate(ZONES, 1):
-        img = f'images/fac/{k}-{zk}.jpg'
-        if os.path.exists(os.path.join(ROOT, img)):
-            media = f'<img src="{img}" alt="팀JJ피트니스 {b["ko"]} {ko}" loading="lazy">'
+    for zk, ko, en in ZONES:
+        imgs = sorted(glob.glob(os.path.join(ROOT, 'images', 'fac', f'{k}-{zk}-*.jpg')))
+        imgs = ['images/fac/' + os.path.basename(f) for f in imgs]
+        if imgs:
+            slides = ''.join(
+                f'<figure class="zslide"><img src="{src}" alt="팀JJ피트니스 {b["ko"]} {ko} {i}" loading="lazy" decoding="async"></figure>'
+                for i, src in enumerate(imgs, 1))
+            cnt = f'<span class="zone-cnt"><b>1</b> / {len(imgs)}</span>' if len(imgs) > 1 else ''
+            arrows = ('<button class="zarrow prev" type="button" aria-label="이전 사진">&#8249;</button>'
+                      '<button class="zarrow next" type="button" aria-label="다음 사진">&#8250;</button>') if len(imgs) > 1 else ''
+            body = f'<div class="zslider"><div class="ztrack">{slides}</div>{arrows}</div>'
         else:
-            media = f'<div class="fac-ph">{PH_ICON}<span>사진 준비 중</span></div>'
+            cnt = ''
+            body = f'<div class="zslider"><div class="ztrack"><figure class="zslide"><div class="fac-ph">{PH_ICON}<span>사진 준비 중</span></div></figure></div></div>'
         facs.append(
-            f'<figure class="fac {size} rv"><span class="fac-num">0{i}</span>'
-            f'<div class="fac-img">{media}</div>'
-            f'<figcaption><b>{ko}<em>{en}</em></b><p>{b["fac"][zk]}</p></figcaption></figure>')
+            f'<div class="zone" data-zone="{zk}">'
+            f'<div class="zone-head"><h3>{ko}<em>{en}</em></h3>{cnt}</div>'
+            f'{body}</div>')
 
     # 가격
     price_html = (
@@ -242,9 +249,8 @@ def build(b):
 <main>
   <section class="bhero" style="background-image:url(images/bh-{k}.jpg)" aria-label="{b['ko']} 소개">
     <div class="bhero-in">
-      <p class="bhero-eyebrow">TEAM JJ FITNESS</p>
-      <h1 class="bhero-tit">{b['en']}</h1>
-      <p class="bhero-sub">팀JJ피트니스 {b['ko']}<small>{b['addr']} · {b['addr_note']}</small></p>
+      <h1 class="bhero-tit">{b['ko']}</h1>
+      <p class="bhero-sub"><small>{b['addr']} · {b['addr_note']}</small></p>
       <ul class="bhero-chips">{chips}</ul>
     </div>
   </section>
@@ -259,12 +265,8 @@ def build(b):
   </nav>
 
   <!-- 시설안내 -->
-  <section class="bsec" id="facility" aria-labelledby="facTit">
-    <div class="bsec-head">
-      <h2 class="big-tit" id="facTit">FACILITIES</h2>
-      <p>{b['intro']}</p>
-    </div>
-    <div class="fac-grid">
+  <section class="bsec bsec-fac" id="facility" aria-label="{b['ko']} 시설 사진">
+    <div class="zones">
       {''.join(facs)}
     </div>
   </section>
