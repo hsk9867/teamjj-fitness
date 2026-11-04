@@ -86,7 +86,7 @@
   }
 
   // 스크롤 등장
-  var els = document.querySelectorAll('.bcircle, .big-tit, .find-wrap, .grid figure');
+  var els = document.querySelectorAll('.bcircle, .big-tit, .find-wrap, .intro-logo, .intro-tit, .intro-lead, .intro-cols li');
   if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
     var io = new IntersectionObserver(function (es) {
       es.forEach(function (e) {
@@ -100,4 +100,27 @@
       io.observe(el);
     });
   }
+})();
+
+// 비포애프터 슬라이드 (지점 페이지 .zone 슬라이더와 같은 마크업)
+(function () {
+  var box = document.querySelector('.ba-slider');
+  if (!box) return;
+  var track = box.querySelector('.ztrack');
+  var prev = box.querySelector('.zarrow.prev');
+  var next = box.querySelector('.zarrow.next');
+  var cnt = document.querySelector('.ba-head .zone-cnt b');
+  var slides = track.querySelectorAll('.zslide');
+  function step() { return slides[0].getBoundingClientRect().width + 10; }
+  function update() {
+    var max = track.scrollWidth - track.clientWidth - 2;
+    prev.disabled = track.scrollLeft <= 2;
+    next.disabled = track.scrollLeft >= max;
+    if (cnt) cnt.textContent = Math.min(slides.length, Math.round(track.scrollLeft / step()) + 1);
+  }
+  prev.addEventListener('click', function () { track.scrollBy({ left: -step(), behavior: 'smooth' }); });
+  next.addEventListener('click', function () { track.scrollBy({ left: step(), behavior: 'smooth' }); });
+  track.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+  update();
 })();
