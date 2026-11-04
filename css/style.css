@@ -307,3 +307,26 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   .others .bc-txt small { display: none; }
   .others .bc-txt b { font-size: 13px; }
 }
+
+/* floating contact buttons */
+.fab { position: fixed; right: 16px; bottom: 20px; z-index: 90; display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
+.fab-btn { position: relative; display: flex; align-items: center; justify-content: center; width: 52px; height: 52px; border-radius: 50%; color: #fff; box-shadow: 0 6px 18px rgba(0,0,0,.45), 0 0 0 1px rgba(255,255,255,.08); transition: transform .25s, box-shadow .25s; }
+.fab-btn svg { width: 26px; height: 26px; fill: currentColor; }
+.fab-btn:hover, .fab-btn:focus-visible { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.14); }
+.fab-kakao { background: #fee500; color: #191919; }
+.fab-insta { background: linear-gradient(135deg, #f9ce34 0%, #ee2a7b 50%, #6228d7 100%); }
+.fab-tel { background: var(--red); }
+.fab-tel svg { width: 24px; height: 24px; }
+.fab-pop { position: absolute; right: 62px; bottom: 0; min-width: 210px; padding: 8px; background: #0e0e0e; border: 1px solid var(--line2); border-radius: 14px; box-shadow: 0 12px 32px rgba(0,0,0,.6); opacity: 0; visibility: hidden; transform: translateY(8px); transition: opacity .2s, transform .2s, visibility .2s; }
+.fab-pop.is-open { opacity: 1; visibility: visible; transform: none; }
+.fab-pop a { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 11px 12px; border-radius: 10px; font-size: 14px; font-weight: 700; color: #fff; white-space: nowrap; }
+.fab-pop a:hover { background: #1a1a1a; }
+.fab-pop a span { font-family: var(--en); font-weight: 600; font-size: 13px; color: #bbb; letter-spacing: .02em; }
+.fab-wrap { position: relative; }
+@media (max-width: 860px) {
+  .fab { right: 12px; bottom: 16px; gap: 8px; }
+  .fab-btn { width: 46px; height: 46px; }
+  .fab-btn svg { width: 23px; height: 23px; }
+  .fab-tel svg { width: 21px; height: 21px; }
+  .fab-pop { right: 56px; }
+}
