@@ -285,7 +285,7 @@ def build(b):
   <!-- 운영시간 -->
   <section class="bsec" id="hours" aria-labelledby="hoursTit">
     <div class="bsec-head">
-      <h2 class="big-tit" id="hoursTit">HOURS &amp;<br>LOCATION</h2>
+      <h2 class="big-tit" id="hoursTit">HOURS &amp;<br><span class="hl">LOCATION</span></h2>
       <p>{b['ko']} 운영시간과 오시는 길, 주차 안내입니다.</p>
     </div>
     <div class="hours-wrap">
@@ -313,7 +313,7 @@ def build(b):
   <!-- 다른 지점 -->
   <section class="others" aria-label="다른 지점">
     <div class="others-in">
-      <h2 class="big-tit">OTHER BRANCHES</h2>
+      <h2 class="big-tit">OTHER<br><span class="hl">BRANCHES</span></h2>
       <div class="bc-grid">{others}</div>
     </div>
   </section>
@@ -353,6 +353,7 @@ def build(b):
 </footer>
 
 {fab_html(b)}
+<script src="js/type.js"></script>
 <script src="js/branch.js"></script>
 <script src="js/fab.js"></script>
 </body>

@@ -356,7 +356,10 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   animation: logoShine 3.6s cubic-bezier(.4,0,.2,1) infinite; }
 @keyframes logoShine { 0% { background-position: 120% 0; } 45% { background-position: -40% 0; } 100% { background-position: -40% 0; } }
 .intro-tit { margin: 0; font-size: clamp(22px, 2.6vw, 38px); font-weight: 600; line-height: 1.35; letter-spacing: -.02em; color: #ddd; }
-.intro-tit strong { display: block; margin-top: 4px; font-size: clamp(30px, 4.2vw, 62px); font-weight: 900; line-height: 1.15; color: #fff; }
+.intro-l1 { display: block; }
+.intro-l2 { display: block; margin-top: 6px; font-size: clamp(30px, 4.2vw, 62px); font-weight: 900; line-height: 1.15; color: #fff; letter-spacing: .08em; clip-path: inset(0 100% 0 0); transition: clip-path 1s cubic-bezier(.65,0,.2,1) .55s, letter-spacing 1.4s cubic-bezier(.2,.7,.2,1) .55s; }
+.intro-tit.in .intro-l2 { clip-path: inset(0 0 0 0); letter-spacing: -.02em; }
+.intro-tit.rv { opacity: 1; transform: none; }
 
 /* fast facility slide */
 .fast { overflow: hidden; padding: clamp(10px, 1.5vw, 24px) 0 clamp(100px, 10vw, 160px); }
@@ -384,4 +387,20 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .ba-slide img { object-fit: contain; }
 @media (max-width: 860px) {
   .ba-slide { flex-basis: 86%; }
+}
+
+/* typography effects */
+.hl { color: var(--red); }
+.ln { display: block; overflow: hidden; padding: 0 .12em .08em 0; margin: 0 -.12em -.08em 0; }
+.ln > span { display: block; transform: translateY(112%); transition: transform .9s cubic-bezier(.2,.7,.2,1) calc(var(--i, 0) * .13s); will-change: transform; }
+.in .ln > span, .has-ln.in .ln > span { transform: none; }
+.has-ln.rv { opacity: 1; transform: none; }
+.hero-sub, .bhero-sub, .bhero-chips { opacity: 0; transform: translateY(14px); transition: opacity .8s ease .55s, transform .8s cubic-bezier(.2,.7,.2,1) .55s; }
+.in .hero-sub, .in .bhero-sub { opacity: 1; transform: none; }
+.in .bhero-chips { opacity: 1; transform: none; transition-delay: .75s; }
+.w { display: inline-block; opacity: 0; transform: translateY(.7em) rotate(3deg); transform-origin: left bottom; transition: opacity .6s ease calc(var(--i, 0) * .09s), transform .7s cubic-bezier(.2,.7,.2,1) calc(var(--i, 0) * .09s); }
+.in .w { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .ln > span, .w, .hero-sub, .bhero-sub, .bhero-chips { transform: none; opacity: 1; transition: none; }
+  .intro-l2 { clip-path: none; letter-spacing: -.02em; transition: none; }
 }
