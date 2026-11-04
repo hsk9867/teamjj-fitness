@@ -86,7 +86,7 @@
   }
 
   // 스크롤 등장
-  var els = document.querySelectorAll('.bcircle, .big-tit, .find-wrap, .intro-logo, .intro-tit, .intro-lead, .intro-cols li');
+  var els = document.querySelectorAll('.bcircle, .big-tit, .find-wrap, .intro-logo, .intro-tit');
   if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
     var io = new IntersectionObserver(function (es) {
       es.forEach(function (e) {

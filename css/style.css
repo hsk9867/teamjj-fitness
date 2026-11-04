@@ -346,16 +346,34 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 }
 
 /* brand intro */
-.intro { max-width: 1100px; margin: 0 auto; padding: clamp(40px, 5vw, 80px) var(--gut) clamp(90px, 10vw, 150px); text-align: center; }
-.intro-logo { width: min(520px, 70vw); height: auto; margin: 0 auto clamp(36px, 4vw, 60px); filter: drop-shadow(0 0 40px rgba(255,37,40,.18)); }
-.intro-tit { margin: 0; font-family: var(--en); font-style: italic; font-weight: 900; font-size: clamp(32px, 4.2vw, 64px); line-height: 1; letter-spacing: -.01em; }
-.intro-tit span { display: block; margin-top: 12px; font-family: var(--ko); font-style: normal; font-weight: 800; font-size: clamp(16px, 1.6vw, 22px); color: var(--red); letter-spacing: .12em; }
-.intro-lead { margin: clamp(20px, 2.4vw, 32px) auto 0; max-width: 640px; font-size: clamp(15px, 1.25vw, 18px); line-height: 1.8; color: #ddd; }
-.intro-cols { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: clamp(40px, 5vw, 70px) 0 0; padding: 0; text-align: left; }
-.intro-cols li { padding: 26px 24px 28px; background: #0a0a0a; border: 1px solid var(--line2); border-radius: 4px; }
-.intro-cols em { display: block; font-family: var(--en); font-style: italic; font-weight: 800; font-size: 13px; color: var(--red); letter-spacing: .08em; }
-.intro-cols b { display: block; margin-top: 10px; font-size: clamp(18px, 1.5vw, 22px); font-weight: 800; }
-.intro-cols p { margin: 10px 0 0; font-size: 14px; line-height: 1.7; color: var(--tx2); }
+.intro { max-width: 1100px; margin: 0 auto; padding: clamp(40px, 5vw, 80px) var(--gut) clamp(50px, 6vw, 90px); text-align: center; }
+.intro-logo { position: relative; display: block; width: min(520px, 70vw); margin: 0 auto clamp(30px, 3.5vw, 50px); isolation: isolate; }
+.intro-logo img { width: 100%; height: auto; filter: brightness(.72) drop-shadow(0 0 40px rgba(255,37,40,.18)); }
+.intro-logo .shine { position: absolute; inset: 0; pointer-events: none;
+  -webkit-mask: url(../images/logo-full.png) center / contain no-repeat; mask: url(../images/logo-full.png) center / contain no-repeat;
+  background: linear-gradient(115deg, transparent 28%, rgba(255,255,255,.35) 42%, rgba(255,255,255,1) 50%, rgba(255,255,255,.35) 58%, transparent 72%);
+  background-size: 260% 100%; background-position: 120% 0; mix-blend-mode: screen;
+  animation: logoShine 3.6s cubic-bezier(.4,0,.2,1) infinite; }
+@keyframes logoShine { 0% { background-position: 120% 0; } 45% { background-position: -40% 0; } 100% { background-position: -40% 0; } }
+.intro-tit { margin: 0; font-size: clamp(22px, 2.6vw, 38px); font-weight: 600; line-height: 1.35; letter-spacing: -.02em; color: #ddd; }
+.intro-tit strong { display: block; margin-top: 4px; font-size: clamp(30px, 4.2vw, 62px); font-weight: 900; line-height: 1.15; color: #fff; }
+
+/* fast facility slide */
+.fast { overflow: hidden; padding: clamp(10px, 1.5vw, 24px) 0 clamp(100px, 10vw, 160px); }
+.fast-row { display: flex; overflow: hidden; margin-bottom: 10px; transform: rotate(-2.2deg) scale(1.08); -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+.fast-track { display: flex; flex: 0 0 auto; gap: 10px; padding-right: 10px; width: max-content; animation: fastSlide 22s linear infinite; will-change: transform; }
+.fast-row.rev .fast-track { animation-direction: reverse; animation-duration: 26s; }
+.fast-track img { flex: 0 0 auto; width: clamp(220px, 22vw, 360px); aspect-ratio: 3 / 2; object-fit: cover; border-radius: 3px; filter: brightness(.9) contrast(1.05); }
+.fast-row:hover .fast-track { animation-play-state: paused; }
+@keyframes fastSlide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@media (max-width: 860px) {
+  .fast-track { animation-duration: 14s; }
+  .fast-row.rev .fast-track { animation-duration: 17s; }
+  .fast-track img { width: 58vw; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .intro-logo .shine, .fast-track { animation: none; }
+}
 
 /* before & after */
 .ba { max-width: 1400px; margin: 0 auto; padding: 0 var(--gut) clamp(100px, 10vw, 160px); }
@@ -365,7 +383,5 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .ba-slide { aspect-ratio: 1; background: #0b0b0b; }
 .ba-slide img { object-fit: contain; }
 @media (max-width: 860px) {
-  .intro-cols { grid-template-columns: 1fr; }
-  .intro-cols li { padding: 20px 18px; }
   .ba-slide { flex-basis: 86%; }
 }
