@@ -124,5 +124,23 @@
     track.addEventListener('scroll', update, { passive: true });
     window.addEventListener('resize', update);
     update();
+
+    // 자동 슬라이드 (data-auto="3000" 처럼 ms 지정) — 호버·터치 중엔 멈춤
+    var auto = parseInt(box.dataset.auto, 10);
+    if (auto && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      var timer, hold = false;
+      function tick() {
+        if (hold || document.hidden) return;
+        var max = track.scrollWidth - track.clientWidth - 2;
+        if (track.scrollLeft >= max) track.scrollTo({ left: 0, behavior: 'smooth' });
+        else track.scrollBy({ left: step(), behavior: 'smooth' });
+      }
+      function start() { clearInterval(timer); timer = setInterval(tick, auto); }
+      ['mouseenter', 'touchstart', 'focusin'].forEach(function (ev) { box.addEventListener(ev, function () { hold = true; }, { passive: true }); });
+      ['mouseleave', 'touchend', 'focusout'].forEach(function (ev) { box.addEventListener(ev, function () { hold = false; start(); }, { passive: true }); });
+      prev.addEventListener('click', start);
+      next.addEventListener('click', start);
+      start();
+    }
   });
 })();
