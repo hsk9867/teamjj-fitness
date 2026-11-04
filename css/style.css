@@ -38,11 +38,12 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .hero { position: relative; margin-top: var(--hd); height: clamp(460px, 72vh, 760px); overflow: hidden; }
 .hero-slide { position: absolute; inset: 0; background: center / cover no-repeat; opacity: 0; transform: scale(1.06); transition: opacity 1.2s ease, transform 7s linear; }
 .hero-slide.is-on { opacity: 1; transform: scale(1); }
-.hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(0,0,0,.72) 0%, rgba(0,0,0,.35) 45%, rgba(0,0,0,.1) 100%), linear-gradient(0deg, rgba(3,3,3,.55), transparent 35%); }
+.hero-slide::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(0,0,0,.72) 0%, rgba(0,0,0,.35) 45%, rgba(0,0,0,.1) 100%), linear-gradient(0deg, rgba(3,3,3,.55), transparent 35%); }
+.hero-slide.lite { background-position: center 78%; }
+.hero-slide.lite::after { background: linear-gradient(90deg, rgba(0,0,0,.45) 0%, rgba(0,0,0,.12) 45%, rgba(0,0,0,0) 100%), linear-gradient(0deg, rgba(3,3,3,.4), transparent 30%); }
 .hero-in { position: relative; z-index: 2; height: 100%; max-width: 1400px; margin: 0 auto; padding: 0 clamp(20px, 10vw, 180px); display: flex; flex-direction: column; justify-content: center; }
 .hero-tit { margin: 0; font-family: var(--en); font-style: italic; font-weight: 900; font-size: clamp(48px, 7.4vw, 112px); line-height: .9; letter-spacing: -.02em; text-transform: uppercase; }
 .hero-sub { margin: 22px 0 0; font-size: clamp(16px, 1.5vw, 20px); font-weight: 700; color: #eee; }
-.hero-btns { display: flex; gap: 10px; margin-top: 26px; }
 .pill { display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 18px; background: rgba(10,10,10,.85); border: 1px solid #2a2a2a; border-radius: 4px; font-family: var(--en); font-weight: 600; font-size: 14px; transition: background .2s, border-color .2s; }
 .pill svg { width: 17px; height: 17px; fill: currentColor; fill-rule: evenodd; }
 .pill:hover { background: #000; border-color: #555; }
@@ -178,11 +179,11 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   .hd-nav.open { visibility: visible; opacity: 1; }
   .hd-nav a { font-size: 22px; font-weight: 700; color: #ddd; padding: 16px 0; border-bottom: 1px solid var(--line); }
   .hero { height: 380px; }
-  .hero::after { background: linear-gradient(0deg, rgba(0,0,0,.8) 0%, rgba(0,0,0,.25) 60%, rgba(0,0,0,.2) 100%); }
+  .hero-slide::after { background: linear-gradient(0deg, rgba(0,0,0,.8) 0%, rgba(0,0,0,.25) 60%, rgba(0,0,0,.2) 100%); }
+  .hero-slide.lite::after { background: linear-gradient(0deg, rgba(0,0,0,.7) 0%, rgba(0,0,0,.12) 55%, rgba(0,0,0,0) 100%); }
   .hero-in { justify-content: flex-end; padding: 0 var(--gut) 26px; }
   .hero-tit { font-size: 40px; }
   .hero-sub { margin-top: 12px; font-size: 15px; }
-  .hero-btns { margin-top: 16px; }
   .pill { height: 40px; padding: 0 14px; font-size: 13px; }
   .hero-dots { padding-top: 12px; }
   .branches { padding-top: 14px; padding-bottom: 20px; }
