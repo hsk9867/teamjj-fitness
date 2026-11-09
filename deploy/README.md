@@ -33,22 +33,28 @@ GitHub 푸시만으로는 실제 사이트에 반영되지 않습니다(GitHub P
 - 검색 등록(네이버 서치어드바이저·구글 서치콘솔)은 `https://teamjjfitness.co.kr/` 로, 소유 확인은 **메타태그** 방식(Cloudflare 가 `/x.html` 을 `/x` 로 리디렉트해 HTML 파일 방식은 실패). `sitemap.xml`, `robots.txt` 는 이미 있습니다.
 
 ## 관리자 (`/admin`)
-- 비밀번호 로그인(4자 이상, PBKDF2 해시를 D1 에 저장, wrangler secret 불필요). 5회 실패 시 10분 잠금. 오른쪽 위 "비밀번호 변경".
-- 탭
-  - **방문 통계**: 오늘·7일·30일, 일별 막대, 페이지별, 유입 경로
+- 화면 틀과 방문자 통계 대시보드는 라이칸짐 관리자(lycangym.hsk9867.workers.dev/admin, 2026-11-09 라이브본)와 같은 구성이다. 왼쪽 메뉴 + 밝은/어두운 화면 자동.
+- 비밀번호 로그인(4자 이상, PBKDF2 해시를 D1 에 저장, wrangler secret 불필요). 5회 실패 시 10분 잠금. 변경은 설정 메뉴.
+- 메뉴
+  - **대시보드(방문자 통계)**: 기간 선택(오늘·7일·30일·90일·직접), 지금 접속, 방문·순방문자·페이지뷰·연락 액션, 평균 머문 시간·스크롤 깊이·이탈률·연락 전환율(이전 같은 기간과 비교), 일별/시간대별 추이, 유입경로, 방문→연락 퍼널, 요일×시간대 히트맵, 연락 액션, 유입경로별 전환, 많이 본 페이지, 첫 방문 페이지, 유입 상세, 캠페인(UTM), 기기·브라우저·OS·지역·화면 크기·언어, 최근 활동
   - **메인 문구**: 메인 제목·소개 문구, 카카오톡 채널 주소(오른쪽 아래 카톡 버튼), 대표 인스타·블로그
   - **지점 정보 · 가격**: 지점별 회원권 가격표, PT 가격표, 요일별 운영시간, 주소·전화·주차·대중교통, 강조 칩, 메인 카드 문구, 예약·지도·SNS 링크, 지점 카카오톡 채널, 대표 사진 2장
-  - **회원 후기**: 메인 후기 카드(별점·내용·태그·이름·출처)
-  - **메인 사진**: 첫 화면 슬라이드, 시설 사진 띠, 비포애프터
-  - **지점 시설 사진**: 지점별 머신존·프리웨이트존·유산소존·탈의실 슬라이드
-- 저장하면 고객 화면은 새로고침 때 반영(최대 30초 캐시). "원래대로" 는 HTML 기본값으로 복귀.
-- 문구에서 `**단어**` 는 빨간 글자, 줄바꿈은 그대로 반영.
+  - **회원 후기** · **메인 사진**(첫 화면 슬라이드, 시설 사진 띠, 비포애프터) · **지점 시설 사진**(지점별 4개 존)
+  - **설정**: 비밀번호 변경, 방문 기록 CSV 내보내기, 홍보 링크(UTM) 만들기, 저장 상태
+- 저장하면 고객 화면은 새로고침 때 반영(최대 30초 캐시). "원래대로" 는 HTML 기본값으로 복귀. 문구에서 `**단어**` 는 빨간 글자.
 - 비밀번호를 잊으면: `npx wrangler d1 execute teamjj-db --remote --command "DELETE FROM settings WHERE key='auth'"` → /admin 에서 다시 설정(지우는 즉시 바로 설정할 것).
+
+## 방문 통계가 세는 것
+- `js/track.js` → `POST /api/track` → D1 `hits` (migrations/0002_hits.sql). 개인정보 없음(무작위 브라우저 ID, 페이지, 유입 주소, 기기 종류, 도시).
+- view: 페이지 열람(새로고침 제외) · event: tel(전화) · kakao · booking(네이버 예약) · insta · blog · map · price(가격표가 화면에 1초 이상 보임) · leave: 화면에 보인 시간과 스크롤 깊이(열람 1회당 한 줄).
+- 연락 액션 = tel · kakao · booking. 방문 = 같은 사람·같은 날 1회. 관리자로 로그인한 브라우저와 검색엔진 봇은 세지 않는다.
+- 유입경로는 그 방문(탭)의 첫 페이지에서 정해 사이트 안에서 이동해도 유지한다(sessionStorage).
+- D1 은 UNION 을 5개까지만 허용한다(통계 쿼리를 고칠 때 주의). 예전 `visits` 테이블은 더 쓰지 않는다.
 
 ## 구조 메모
 - `js/cms.js` 가 `<head>` 에서 `/api/content` 를 받아 `data-cms`(문구) · `data-cms-href`(링크) · `data-cms-bg`(배경 사진) · `data-cms-price` / `data-cms-pt`(가격표) · `data-cms-hours`(운영시간표) · `#revTrack` `#baTrack` `#heroSlides` `#fastA/B` · `.zone[data-zone]` 을 덮어쓰고, `window.CMS_READY` 뒤에 type.js / main.js / branch.js / fab.js 가 초기화합니다.
 - 기본값은 HTML 그 자체입니다. 지점 페이지는 `src/build_branches.py` 의 BRANCHES 로 생성하며, 전화번호를 바꾸면 `js/cms.js` 의 `TEL` 도 같이 고칩니다.
 - 저장 키: `text`(문구·링크·대표 사진 맵), `price.<지점>`, `hours.<지점>`, `reviews`, `slides.hero|fast|ba`, `fac.<지점>.<존>`.
-- 방문 기록은 `visits` (페이지, 유입 도메인, 무작위 브라우저 ID, 화면 폭 — 개인정보 없음). 정리: `npx wrangler d1 execute teamjj-db --remote --command "DELETE FROM visits WHERE ts < strftime('%s','now','-1 year')"`
+- 방문 기록 정리: `npx wrangler d1 execute teamjj-db --remote --command "DELETE FROM hits WHERE ts < strftime('%s','now','-1 year')"`
 - 올린 사진은 `files` 테이블, 주소 `/uploads/<id>.jpg`.
 - 로그: `npx wrangler tail`
