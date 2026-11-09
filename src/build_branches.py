@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
-"""지점 소개 페이지 생성기: python src/build_branches.py → okgye.html 등 4개 파일.
+"""지점 소개 페이지 생성기: python src/build_branches.py → okgye.html 등 4개 파일
+   + 검색 · AI 노출용 파일(index.html 의 SEO 블록 · sitemap.xml · robots.txt · llms.txt, src/seo.py).
    데이터는 아래 BRANCHES 를 고치고 다시 실행하면 됨 (가격·운영시간은 네이버 플레이스 2026-10/11 기준)."""
-import glob, os
+import glob, os, re, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import seo
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-SITE = 'https://teamjjfitness.co.kr'
+SITE = seo.SITE
 # data-cms / data-cms-href / data-cms-price … 속성은 관리자 페이지(/admin)에서 바꾼 값을 js/cms.js 가 덮어쓰는 자리 표시.
 # 여기 BRANCHES 값은 "원래대로" 를 눌렀을 때 돌아가는 기본값이 된다. 전화번호를 바꾸면 js/cms.js 의 TEL 도 같이 고칠 것.
 
@@ -35,6 +38,13 @@ BRANCHES = [
     'closed': '매달 넷째 주 일요일 정기 휴무', 'hours_note': '정기휴무 전날 토요일 21시 마감, 월요일 06시 오픈',
     'parking': '전용 주차장 3시간 무료', 'parking_note': "산호대로29길 9, 빅마트 옆 '옥계 쿨스파' 건물",
     'bus': '삼구트리니엔건너(도보 1분) · 양포도서관건너(도보 4분)',
+    # ── 검색 · AI 노출용 (src/seo.py) ──
+    'tkw': '구미 옥계동 24시간 헬스장', 'lead': '구미 옥계동 24시간 헬스장. 400평 규모에 해외 명품 머신 120종, 구미 최초 해머스트랭스 오피셜 센터',
+    'kw': ['팀JJ피트니스 옥계점', '옥계동 헬스장', '구미 옥계 헬스장', '구미 24시간 헬스장', '구미 헬스장', '옥계동 PT', '해머스트랭스 오피셜 센터'],
+    'street': '옥계북로 22 7층, 6층', 'locality': '구미시', 'region_full': '경상북도', 'geo_region': 'KR-47',
+    'home_hours': '24시간 연중무휴',
+    'oh': [(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], '00:00', '23:59')],
+    'faq_extra': [('옥계점에 대학생 할인이 있나요?', '네, 대학생 상시 할인을 운영합니다. 할인 가격과 재등록 · 이벤트 가격은 센터로 문의해 주세요.')],
   },
   {
     'key': 'daegok', 'en': 'DAEGOK', 'ko': '대곡점', 'region': '대구 달서구 도원동',
@@ -62,6 +72,13 @@ BRANCHES = [
     'closed': '매달 넷째 주 일요일 정기 휴무', 'hours_note': '정기휴무 전날 토요일 20시 마감, 월요일 06시 오픈 · 등록 가능 시간 평일 07~24시, 주말 12~20시',
     'parking': '건물 뒤 자체 주차장 100대, 3시간 무료', 'parking_note': '자리가 없으면 센터로 전화 주시면 전용 주차장을 안내해 드립니다',
     'bus': '대곡강산타운건너(도보 2분) · 대곡중학교앞(도보 3분)',
+    # ── 검색 · AI 노출용 (src/seo.py) ──
+    'tkw': '대구 달서구 24시간 헬스장', 'lead': '대구 달서구 도원동 24시간 헬스장. 달서구 최대 500평, 수입 명품 머신 120종, 천국의 계단 4대',
+    'kw': ['팀JJ피트니스 대곡점', '대곡 헬스장', '달서구 헬스장', '도원동 헬스장', '대구 24시간 헬스장', '달서구 PT'],
+    'street': '도원로 36 2층', 'locality': '달서구', 'region_full': '대구광역시', 'geo_region': 'KR-27',
+    'home_hours': '24시간 연중무휴',
+    'oh': [(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], '00:00', '23:59')],
+    'faq_extra': [('대곡점 회원권은 언제 등록할 수 있나요?', '회원권 · 일일권 등록은 평일 07시 ~ 24시, 주말 12시 ~ 20시에 할 수 있습니다. 등록한 뒤에는 24시간 운동할 수 있습니다.')],
   },
   {
     'key': 'hyeonggok', 'en': 'HYEONGGOK', 'ko': '형곡점', 'region': '경북 구미시 형곡동',
@@ -89,6 +106,13 @@ BRANCHES = [
     'closed': '매주 일요일 정기 휴무', 'hours_note': '토요일 21시 마감, 월요일 06시 오픈',
     'parking': '건물 1층 전용 주차장', 'parking_note': '만차 시 중앙도서관 · 공원 주변 이면도로 이용',
     'bus': '형곡4주공네거리(도보 3분) · 차병원건너(도보 7분)',
+    # ── 검색 · AI 노출용 (src/seo.py) ──
+    'tkw': '구미 형곡동 헬스장', 'lead': '구미 형곡동 헬스장(평일 24시간). 형곡동 최대 400평, 수입 명품 머신 100종, 천국의 계단 4대',
+    'kw': ['팀JJ피트니스 형곡점', '형곡동 헬스장', '구미 형곡 헬스장', '구미 헬스장', '구미 24시간 헬스장', '형곡동 PT', '천국의 계단'],
+    'street': '신시로7길 12-12 3층 301호', 'locality': '구미시', 'region_full': '경상북도', 'geo_region': 'KR-47',
+    'home_hours': '평일 24시간 · 토 ~21시',
+    'oh': [(['Monday'], '06:00', '23:59'), (['Tuesday', 'Wednesday', 'Thursday', 'Friday'], '00:00', '23:59'), (['Saturday'], '00:00', '21:00')],
+    'faq_extra': [('형곡점은 일일권으로 이용할 수 있나요?', '네, 일일권은 22,000원입니다. 연휴 기간 일일권 할인 이벤트는 블로그와 네이버 소식에서 안내합니다.')],
   },
   {
     'key': 'bonggok', 'en': 'BONGGOK', 'ko': '봉곡점', 'region': '경북 구미시 봉곡동',
@@ -117,6 +141,14 @@ BRANCHES = [
     'closed': '매주 일요일 정기 휴무', 'hours_note': '토요일 20시 마감, 월요일 08시 오픈',
     'parking': '건물 뒤편 주차장', 'parking_note': '',
     'bus': '봉곡동대구은행앞(도보 1분) · 봉곡동대구은행건너(도보 2분)',
+    # ── 검색 · AI 노출용 (src/seo.py) ──
+    'tkw': '구미 봉곡동 헬스장', 'lead': '구미 봉곡동 헬스장(월 08시 ~ 토 20시 24시간). 봉곡동 유일 해외 명품 머신 센터, 기초부터 가르치는 보디빌딩식 PT',
+    'kw': ['팀JJ피트니스 봉곡점', '봉곡동 헬스장', '구미 봉곡 헬스장', '구미 헬스장', '봉곡동 PT', '구미 PT', '보디빌딩 PT'],
+    'street': '봉곡남로 103 2층', 'locality': '구미시', 'region_full': '경상북도', 'geo_region': 'KR-47',
+    'home_hours': '월 08시 ~ 토 20시 24시간',
+    'oh': [(['Monday'], '08:00', '23:59'), (['Tuesday', 'Wednesday', 'Thursday', 'Friday'], '00:00', '23:59'), (['Saturday'], '00:00', '20:00')],
+    'pt_faq': '수업이 끝난 뒤 혼자서도 운동할 수 있게 기초부터 가르치는 보디빌딩식 PT입니다.',
+    'faq_extra': [('봉곡점에 대학생 할인이 있나요?', '네, 대학생은 학생증을 지참하면 3개월 150,000원에 등록할 수 있습니다.')],
   },
 ]
 
@@ -210,41 +242,42 @@ def build(b):
 
     # 다른 지점
     others = ''.join(
-        f'<a class="bcircle" href="{o["key"]}.html"><span class="bc-img"><img data-cms="{o["key"]}.img.circle" data-cms-attr="src" src="images/br-{o["key"]}.jpg" alt="" loading="lazy"></span>'
+        f'<a class="bcircle" href="{o["key"]}"><span class="bc-img"><img data-cms="{o["key"]}.img.circle" data-cms-attr="src" src="images/br-{o["key"]}.jpg" alt="팀JJ피트니스 {o["ko"]} 내부" loading="lazy"></span>'
         f'<span class="bc-txt"><strong>{o["en"]}</strong><b>{o["ko"]}</b><small>{o["region"]}</small></span></a>'
         for o in BRANCHES if o['key'] != k)
 
     chips = ''.join(f'<li>{c}</li>' for c in b['chips'])
-    desc = f'팀JJ피트니스 {b["ko"]} 시설안내 · 가격안내 · 운영시간. {b["addr"]}, {b["tel"]}.'
+
+    # 검색 · AI 노출: 제목 · 설명 · 구조화 데이터 · 자주 묻는 질문
+    faq = seo.branch_faq(b)
+    head = seo.head(seo.title_of(b), seo.desc_of(b), f'/{k}', f'images/bh-{k}.jpg', (1800, 1000),
+                    f'팀JJ피트니스 {b["ko"]} — {b["tkw"]}', b['kw'], og_desc=b['intro'],
+                    geo=b['map'], placename=b['region'], region=b['geo_region'])
 
     return f'''<!doctype html>
 <html lang="ko">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{b['ko']} | 팀JJ피트니스 TEAM JJ FITNESS {b['en']}</title>
-<meta name="description" content="{desc}">
-<meta property="og:type" content="website">
-<meta property="og:title" content="팀JJ피트니스 {b['ko']} | TEAM JJ FITNESS {b['en']}">
-<meta property="og:description" content="{b['intro']}">
-<meta property="og:image" content="{SITE}/images/bh-{k}.jpg">
-<meta property="og:url" content="{SITE}/{k}">
-<link rel="canonical" href="{SITE}/{k}">
+{head}
 <link rel="icon" href="images/logo-full.png">
+<link rel="preload" as="image" href="images/bh-{k}.jpg" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <link rel="stylesheet" href="css/style.css">
 <script src="js/cms.js"></script>
+{seo.ld_script(seo.branch_ld(b, ROOT), 'ld-main')}
+{seo.ld_script(seo.faq_ld(faq), 'ld-faq')}
 </head>
 <body data-branch="{k}">
 
 <header class="hd" id="top">
-  <a class="hd-logo" href="index.html" aria-label="팀JJ피트니스 홈"><img src="images/logo-word.png" alt="TEAM JJ FITNESS"></a>
+  <a class="hd-logo" href="./" aria-label="팀JJ피트니스 홈"><img src="images/logo-word.png" alt="TEAM JJ FITNESS"></a>
   <nav class="hd-nav" id="nav">
-    <a href="index.html">홈</a>
-    <a href="index.html#branches">지점 소개</a>
+    <a href="./">홈</a>
+    <a href="./#branches">지점 소개</a>
     <a href="#facility">시설안내</a>
     <a href="#price">가격안내</a>
     <a href="#hours">운영시간</a>
@@ -255,7 +288,7 @@ def build(b):
 <main>
   <section class="bhero" data-cms-bg="{k}.img.hero" style="background-image:url(images/bh-{k}.jpg)" aria-label="{b['ko']} 소개">
     <div class="bhero-in">
-      <h1 class="bhero-tit">{b['ko']}</h1>
+      <h1 class="bhero-tit"><span class="sr-only">팀JJ피트니스 </span>{b['ko']}</h1>
       <p class="bhero-sub"><small><span data-cms="{k}.addr">{b['addr']}</span> · <span data-cms="{k}.addr_note">{b['addr_note']}</span></small></p>
       <ul class="bhero-chips" data-cms="{k}.chips" data-cms-fmt="lines">{chips}</ul>
     </div>
@@ -266,7 +299,7 @@ def build(b):
       <a href="#facility" data-sub="facility">시설안내</a>
       <a href="#price" data-sub="price">가격안내</a>
       <a href="#hours" data-sub="hours">운영시간</a>
-      <a class="home" href="index.html#branches">← ALL BRANCHES</a>
+      <a class="home" href="./#branches">← ALL BRANCHES</a>
     </div>
   </nav>
 
@@ -316,6 +349,15 @@ def build(b):
     </div>
   </section>
 
+  <!-- 자주 묻는 질문 -->
+  <section class="bsec faq" id="faq" aria-labelledby="faqTit">
+    <div class="bsec-head">
+      <h2 class="big-tit" id="faqTit">FREQUENT<br><span class="hl">QUESTIONS</span></h2>
+      <p>팀JJ피트니스 {b['ko']} 자주 묻는 질문입니다. 가격 · 운영시간 · 주차 · PT처럼 전화 전에 많이 물어보시는 내용을 모았습니다.</p>
+    </div>
+    {seo.faq_html(faq, k + '.faq')}
+  </section>
+
   <!-- 다른 지점 -->
   <section class="others" aria-label="다른 지점">
     <div class="others-in">
@@ -338,20 +380,20 @@ def build(b):
       <div>
         <p class="ft-h">팀JJ피트니스 지점</p>
         <ul class="ft-list">
-          <li><a href="okgye.html">옥계점</a><span>경북 구미시 옥계북로 22 · 0507-1486-8853</span></li>
-          <li><a href="daegok.html">대곡점</a><span>대구 달서구 도원로 36 · 0507-1395-0089</span></li>
-          <li><a href="hyeonggok.html">형곡점</a><span>경북 구미시 신시로7길 12-12 · 0507-1381-6729</span></li>
-          <li><a href="bonggok.html">봉곡점</a><span>경북 구미시 봉곡남로 103 · 0507-1385-0910</span></li>
+          <li><a href="okgye">옥계점</a><span>경북 구미시 옥계북로 22 · 0507-1486-8853</span></li>
+          <li><a href="daegok">대곡점</a><span>대구 달서구 도원로 36 · 0507-1395-0089</span></li>
+          <li><a href="hyeonggok">형곡점</a><span>경북 구미시 신시로7길 12-12 · 0507-1381-6729</span></li>
+          <li><a href="bonggok">봉곡점</a><span>경북 구미시 봉곡남로 103 · 0507-1385-0910</span></li>
         </ul>
       </div>
     </div>
   </div>
   <p class="ft-copy">팀JJ피트니스 · TEAM JJ FITNESS · 가격과 운영시간은 지점 사정에 따라 바뀔 수 있습니다. &copy; 2026 TEAM JJ FITNESS</p>
   <nav class="ft-bar" aria-label="바로가기">
-    <a href="okgye.html">옥계점</a>
-    <a href="daegok.html">대곡점</a>
-    <a href="hyeonggok.html">형곡점</a>
-    <a href="bonggok.html">봉곡점</a>
+    <a href="okgye">옥계점</a>
+    <a href="daegok">대곡점</a>
+    <a href="hyeonggok">형곡점</a>
+    <a href="bonggok">봉곡점</a>
     <a data-cms-href="{k}.link.insta" href="{b['insta']}" target="_blank" rel="noopener">인스타그램</a>
     <a{cta_cms} href="{cta}"{cta_blank}>상담 예약</a>
   </nav>
@@ -368,9 +410,44 @@ def build(b):
 '''
 
 
+def write(name, text):
+    with open(os.path.join(ROOT, name), 'w', encoding='utf-8', newline='\n') as f:
+        f.write(text)
+    print('wrote', name)
+
+
+def patch_index():
+    """index.html 의 <!-- SEO:이름 --> … <!-- /SEO:이름 --> 사이만 새로 채운다 (나머지는 손으로 고친 그대로)."""
+    path = os.path.join(ROOT, 'index.html')
+    with open(path, encoding='utf-8') as f:
+        h = f.read()
+    faq = seo.home_faq(BRANCHES)
+    blocks = {
+        'HEAD': seo.head(seo.HOME_TITLE, seo.HOME_DESC, '/', 'images/og.jpg', (1200, 630),
+                         '팀JJ피트니스 — 구미 · 대구 24시간 프리미엄 헬스장', seo.HOME_KW,
+                         og_desc='Experience Real Premium — 구미 옥계점 · 형곡점 · 봉곡점, 대구 대곡점. 해외 명품 머신과 24시간 운영.',
+                         placename='경북 구미시 · 대구 달서구', region='KR-47'),
+        'LD': seo.ld_script(seo.home_ld(BRANCHES, ROOT), 'ld-main') + '\n' + seo.ld_script(seo.faq_ld(faq), 'ld-faq'),
+        'FAQ': f'''  <section class="faq faq-home" id="faq" aria-labelledby="faqTit">
+    <div class="bsec-head">
+      <h2 class="big-tit" id="faqTit">FREQUENT<br><span class="hl">QUESTIONS</span></h2>
+      <p data-cms="faq.desc">자주 묻는 질문 — 팀JJ피트니스는 경북 구미(옥계 · 형곡 · 봉곡)와 대구 달서구(대곡)에 4개 지점을 둔 24시간 프리미엄 헬스장입니다. 가격 · 운영시간 · 주차처럼 많이 물어보시는 내용을 모았습니다.</p>
+    </div>
+    {seo.faq_html(faq, 'faq')}
+  </section>''',
+    }
+    for name, body in blocks.items():
+        pat = re.compile(r'(<!-- SEO:%s -->\n).*?(\n *<!-- /SEO:%s -->)' % (name, name), re.S)
+        if not pat.search(h):
+            sys.exit(f'index.html 에 <!-- SEO:{name} --> 표시가 없습니다')
+        h = pat.sub(lambda m: m.group(1) + body + m.group(2), h)
+    write('index.html', h)
+
+
 if __name__ == '__main__':
     for b in BRANCHES:
-        path = os.path.join(ROOT, b['key'] + '.html')
-        with open(path, 'w', encoding='utf-8', newline='\n') as f:
-            f.write(build(b))
-        print('wrote', b['key'] + '.html')
+        write(b['key'] + '.html', build(b))
+    patch_index()
+    write('sitemap.xml', seo.sitemap(BRANCHES, ROOT))
+    write('robots.txt', seo.robots())
+    write('llms.txt', seo.llms(BRANCHES))

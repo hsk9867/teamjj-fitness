@@ -51,6 +51,20 @@ GitHub 푸시만으로는 실제 사이트에 반영되지 않습니다(GitHub P
 - 유입경로는 그 방문(탭)의 첫 페이지에서 정해 사이트 안에서 이동해도 유지한다(sessionStorage).
 - D1 은 UNION 을 5개까지만 허용한다(통계 쿼리를 고칠 때 주의). 예전 `visits` 테이블은 더 쓰지 않는다.
 
+## 검색 · AI 노출 (SEO · AEO · GEO, 2026-11-09)
+
+원본 데이터는 `src/build_branches.py` 의 `BRANCHES` 한 곳이고, `src/seo.py` 가 거기서 아래를 모두 만든다. **가격 · 주소 · 전화 · 운영시간을 바꾸면 `python src/build_branches.py` → `npx wrangler deploy`.**
+
+- 페이지마다: 제목 · 설명 · 키워드 · canonical · OG/트위터 카드 · 지역 메타(지점 페이지는 좌표) · 첫 화면 사진 preload
+- 구조화 데이터(JSON-LD): 메인 `#ld-main` = Organization + WebSite + WebPage + 지점 4곳 HealthClub 요약, 지점 페이지 `#ld-main` = WebPage(BreadcrumbList) + HealthClub(주소 · 좌표 · 전화 · 영업시간 · 회원권/PT Offer · 네이버 예약), 모든 페이지 `#ld-faq` = FAQPage. 후기 평점(aggregateRating)은 네이버 리뷰라서 넣지 않았다(구글 정책: 다른 사이트에서 가져온 평점 금지)
+- 자주 묻는 질문: 메인 8개 + 지점마다 8개(화면에 보이는 `.faq-list`). 답변 안의 주소 · 주차 · 휴무 · 가격은 지점 정보 칸과 연결돼 있어 관리자에서 바꾸면 같이 바뀐다. 관리자에서 답변을 직접 고쳐 쓰면 그 답변은 자동 연결이 끊긴다
+- `robots.txt`(검색 · AI 크롤러 이름별 허용), `sitemap.xml`(5개 페이지 + 사진), `llms.txt`(AI 가 읽는 소개문: 지점 표 · 가격표 · 시설 · FAQ)
+- `index.html` 은 `<!-- SEO:HEAD -->` `<!-- SEO:LD -->` `<!-- SEO:FAQ -->` 표시 사이만 스크립트가 다시 쓴다. 그 사이는 손으로 고치지 말 것
+- 내부 링크는 `.html` 없이 쓴다(`okgye`, `./`). `/okgye.html` 은 Cloudflare 가 `/okgye` 로 한 번 넘기기 때문
+- `_headers`: `/images/*` 를 7일 브라우저 캐시. 같은 파일 이름으로 사진을 바꿔 올리면 다시 온 방문자에겐 최대 7일 뒤에 바뀐다 → 이름을 바꿔 올릴 것
+- 관리자에서 바꾼 값은 `js/cms.js` 가 화면과 JSON-LD 에 반영한다(구글은 스크립트를 실행하므로 반영됨). **`llms.txt` 와 원본 HTML 은 그대로**라서 스크립트를 실행하지 않는 AI 크롤러는 `BRANCHES` 기본값을 본다 → 가격을 바꾸면 `BRANCHES` 도 고쳐 다시 배포
+- 점검: 관리자 > 검색·AI 노출. 검색 등록(네이버 서치어드바이저 · 구글 서치콘솔) 소유 확인 태그는 `src/seo.py` 의 `VERIFY` 에 넣는다
+
 ## 구조 메모
 - `js/cms.js` 가 `<head>` 에서 `/api/content` 를 받아 `data-cms`(문구) · `data-cms-href`(링크) · `data-cms-bg`(배경 사진) · `data-cms-price` / `data-cms-pt`(가격표) · `data-cms-hours`(운영시간표) · `#revTrack` `#baTrack` `#heroSlides` `#fastA/B` · `.zone[data-zone]` 을 덮어쓰고, `window.CMS_READY` 뒤에 type.js / main.js / branch.js / fab.js 가 초기화합니다.
 - 기본값은 HTML 그 자체입니다. 지점 페이지는 `src/build_branches.py` 의 BRANCHES 로 생성하며, 전화번호를 바꾸면 `js/cms.js` 의 `TEL` 도 같이 고칩니다.

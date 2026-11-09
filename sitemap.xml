@@ -1,8 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://teamjjfitness.co.kr/</loc><lastmod>2026-11-09</lastmod><priority>1.0</priority></url>
-  <url><loc>https://teamjjfitness.co.kr/okgye</loc><lastmod>2026-11-09</lastmod><priority>0.8</priority></url>
-  <url><loc>https://teamjjfitness.co.kr/daegok</loc><lastmod>2026-11-09</lastmod><priority>0.8</priority></url>
-  <url><loc>https://teamjjfitness.co.kr/hyeonggok</loc><lastmod>2026-11-09</lastmod><priority>0.8</priority></url>
-  <url><loc>https://teamjjfitness.co.kr/bonggok</loc><lastmod>2026-11-09</lastmod><priority>0.8</priority></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://teamjjfitness.co.kr/</loc>
+    <lastmod>2026-11-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image><image:loc>https://teamjjfitness.co.kr/images/og.jpg</image:loc><image:title>팀JJ피트니스 — 구미 · 대구 24시간 헬스장</image:title></image:image>
+    <image:image><image:loc>https://teamjjfitness.co.kr/images/br-okgye.jpg</image:loc><image:title>팀JJ피트니스 옥계점 내부</image:title></image:image>
+    <image:image><image:loc>https://teamjjfitness.co.kr/images/br-daegok.jpg</image:loc><image:title>팀JJ피트니스 대곡점 내부</image:title></image:image>
+    <image:image><image:loc>https://teamjjfitness.co.kr/images/br-hyeonggok.jpg</image:loc><image:title>팀JJ피트니스 형곡점 내부</image:title></image:image>
+    <image:image><image:loc>https://teamjjfitness.co.kr/images/br-bonggok.jpg</image:loc><image:title>팀JJ피트니스 봉곡점 내부</image:title></image:image>
+  </url>
+  <url>
+    <loc>https://teamjjfitness.co.kr/okgye</loc>
+    <lastmod>2026-11-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image><image:loc>https://teamjjfitness.co.kr/images/bh-okgye.jpg</image:loc><image:title>팀JJ피트니스 옥계점 (경북 구미시 옥계동)</image:title></image:image>
+    <image:image><image:loc>https://teamjjfitness.co.kr/images/fac/okgye-machine-01.jpg</image:loc><image:title>팀JJ피트니스 옥계점 머신존</image:title></image:image>
+    <image:image><image:loc>https://teamjjfitness.co.kr/images/fac/okgye-machine-02.jpg</image:loc><image:title>팀JJ피트니스 옥계점 머신존</image:title></image:image>
+    <image:image><image:loc>https://teamjjfitness.co.kr/images/fac/okgye-machine-03.jpg</image:loc><image:title>팀JJ피트니스 옥계점 머신존</image:title></image:image>
+    <image:image><image:loc>https://teamjjfitness.co.kr/images/fac/okgye-free-01.jpg</image:loc><image:title>팀JJ피트니스 옥계점 프리웨이트존</image:title></image:image>
+    <image:image><image:loc>https://teamjjfitness.co.kr/images/fac/okgye-free-02.jpg</image:loc><image:title>팀JJ피트니스 옥계점 프리웨이트존</image:title></image:image>
+    <image:image><image:loc>https://teamjjfitness.co.kr/images/fac/okgye-free-03.jpg</image:loc><image:title>팀JJ피트니스 옥계점 프리웨이트존</image:title></image:image>
+    <image:image><image:loc>https://teamjjfitness.co.kr/images/fac/okgye-cardio-01.jpg</image:loc><image:title>팀JJ피트니스 옥계점 유산소존</image:title></image:image>
+    <image:image><image:loc>https://teamjjfitness.co.kr/images/fac/okgye-cardio-02.jpg</image:loc><image:title>팀JJ피트니스 옥계점 유산소존</image:title></image:image>
+    <image:image><image:loc>https://teamjjfitness.co.kr/images/fac/okgye-cardio-03.jpg</image:loc><image:title>팀JJ피트니스 옥계점 유산소존</image:title></image:image>
+    <image:image><image:loc>https://teamjjfitness.co.kr/images/fac/okgye-locker-01.jpg</image:loc><image:title>팀JJ피트니스 옥계점 탈의실</image:title></image:image>
+  </url>
+  <url>
+    <loc>https://teamjjfitness.co.kr/daegok</loc>
+    <lastmod>2026-11-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image><image:loc>https://teamjjfitness.co.kr/images/bh-daegok.jpg</image:loc><image:title>팀JJ피트니스 대곡점 (대구 달서구 도원동)</image:title></image:image>
+    <image:image><image:loc>https://teamjjfitness.co.kr/images/fac/daegok-machine-01.jpg</image:loc><image:title>팀JJ피트니스 대곡점 머신존</image:title></image:image>
+    <image:image><image:loc>https://teamjjfitness.co.kr/images/fac/daegok-machine-02.jpg</image:loc><image:title>팀JJ피트니스 대곡점 머신존</image:title></image:image>
+    <image:image><image:loc>https://teamjjfitness.co.kr/images/fac/daegok-machine-03.jpg</image:loc><image:title>팀JJ피트니스 대곡점 머신존</image:title></image:image>
+    <image:image><image:loc>https://teamjjfitness.co.kr/images/fac/daegok-free-01.jpg</image:loc><image:title>팀JJ피트니스 대곡점 프리웨이트존</image:title></image:image>
+    <image:image><image:loc>https://teamjjfitness.co.kr/images/fac/daegok-free-02.jpg</image:loc><image:title>팀JJ피트니스 대곡점 프리웨이트존</image:title></image:image>
+    <image:image><image:loc>https://teamjjfitness.co.kr/images/fac/daegok-free-03.jpg</image:loc><image:title>팀JJ피트니스 대곡점 프리웨이트존</image:title></image:image>
+    <image:image><image:loc>https://teamjjfitness.co.kr/images/fac/daegok-cardio-01.jpg</image:loc><image:title>팀JJ피트니스 대곡점 유산소존</image:title></image:image>
+    <image:image><image:loc>https://teamjjfitness.co.kr/images/fac/daegok-cardio-02.jpg</image:loc><image:title>팀JJ피트니스 대곡점 유산소존</image:title></image:image>
+    <image:image><image:loc>https://teamjjfitness.co.kr/images/fac/daegok-cardio-03.jpg</image:loc><image:title>팀JJ피트니스 대곡점 유산소존</image:title></image:image>
+    <image:image><image:loc>https://teamjjfitness.co.kr/images/fac/daegok-locker-01.jpg</image:loc><image:title>팀JJ피트니스 대곡점 탈의실</image:title></image:image>
+    <image:image><image:loc>https://teamjjfitness.co.kr/images/fac/daegok-locker-02.jpg</image:loc><image:title>팀JJ피트니스 대곡점 탈의실</image:title></image:image>
+    <image:image><image:loc>https://teamjjfitness.co.kr/images/fac/daegok-locker-03.jpg</image:loc><image:title>팀JJ피트니스 대곡점 탈의실</image:title></image:image>
+  </url>
+  <url>
+    <loc>https://teamjjfitness.co.kr/hyeonggok</loc>
+    <lastmod>2026-11-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image><image:loc>https://teamjjfitness.co.kr/images/bh-hyeonggok.jpg</image:loc><image:title>팀JJ피트니스 형곡점 (경북 구미시 형곡동)</image:title></image:image>
+    <image:image><image:loc>https://teamjjfitness.co.kr/images/fac/hyeonggok-machine-01.jpg</image:loc><image:title>팀JJ피트니스 형곡점 머신존</image:title></image:image>
+    <image:image><image:loc>https://teamjjfitness.co.kr/images/fac/hyeonggok-machine-02.jpg</image:loc><image:title>팀JJ피트니스 형곡점 머신존</image:title></image:image>
+    <image:image><image:loc>https://teamjjfitness.co.kr/images/fac/hyeonggok-machine-03.jpg</image:loc><image:title>팀JJ피트니스 형곡점 머신존</image:title></image:image>
+    <image:image><image:loc>https://teamjjfitness.co.kr/images/fac/hyeonggok-free-01.jpg</image:loc><image:title>팀JJ피트니스 형곡점 프리웨이트존</image:title></image:image>
+    <image:image><image:loc>https://teamjjfitness.co.kr/images/fac/hyeonggok-free-02.jpg</image:loc><image:title>팀JJ피트니스 형곡점 프리웨이트존</image:title></image:image>
+    <image:image><image:loc>https://teamjjfitness.co.kr/images/fac/hyeonggok-free-03.jpg</image:loc><image:title>팀JJ피트니스 형곡점 프리웨이트존</image:title></image:image>
+    <image:image><image:loc>https://teamjjfitness.co.kr/images/fac/hyeonggok-cardio-01.jpg</image:loc><image:title>팀JJ피트니스 형곡점 유산소존</image:title></image:image>
+    <image:image><image:loc>https://teamjjfitness.co.kr/images/fac/hyeonggok-cardio-02.jpg</image:loc><image:title>팀JJ피트니스 형곡점 유산소존</image:title></image:image>
+    <image:image><image:loc>https://teamjjfitness.co.kr/images/fac/hyeonggok-cardio-03.jpg</image:loc><image:title>팀JJ피트니스 형곡점 유산소존</image:title></image:image>
+    <image:image><image:loc>https://teamjjfitness.co.kr/images/fac/hyeonggok-locker-01.jpg</image:loc><image:title>팀JJ피트니스 형곡점 탈의실</image:title></image:image>
+    <image:image><image:loc>https://teamjjfitness.co.kr/images/fac/hyeonggok-locker-02.jpg</image:loc><image:title>팀JJ피트니스 형곡점 탈의실</image:title></image:image>
+    <image:image><image:loc>https://teamjjfitness.co.kr/images/fac/hyeonggok-locker-03.jpg</image:loc><image:title>팀JJ피트니스 형곡점 탈의실</image:title></image:image>
+  </url>
+  <url>
+    <loc>https://teamjjfitness.co.kr/bonggok</loc>
+    <lastmod>2026-11-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image><image:loc>https://teamjjfitness.co.kr/images/bh-bonggok.jpg</image:loc><image:title>팀JJ피트니스 봉곡점 (경북 구미시 봉곡동)</image:title></image:image>
+    <image:image><image:loc>https://teamjjfitness.co.kr/images/fac/bonggok-machine-01.jpg</image:loc><image:title>팀JJ피트니스 봉곡점 머신존</image:title></image:image>
+    <image:image><image:loc>https://teamjjfitness.co.kr/images/fac/bonggok-machine-02.jpg</image:loc><image:title>팀JJ피트니스 봉곡점 머신존</image:title></image:image>
+    <image:image><image:loc>https://teamjjfitness.co.kr/images/fac/bonggok-machine-03.jpg</image:loc><image:title>팀JJ피트니스 봉곡점 머신존</image:title></image:image>
+    <image:image><image:loc>https://teamjjfitness.co.kr/images/fac/bonggok-free-01.jpg</image:loc><image:title>팀JJ피트니스 봉곡점 프리웨이트존</image:title></image:image>
+    <image:image><image:loc>https://teamjjfitness.co.kr/images/fac/bonggok-free-02.jpg</image:loc><image:title>팀JJ피트니스 봉곡점 프리웨이트존</image:title></image:image>
+    <image:image><image:loc>https://teamjjfitness.co.kr/images/fac/bonggok-free-03.jpg</image:loc><image:title>팀JJ피트니스 봉곡점 프리웨이트존</image:title></image:image>
+    <image:image><image:loc>https://teamjjfitness.co.kr/images/fac/bonggok-cardio-01.jpg</image:loc><image:title>팀JJ피트니스 봉곡점 유산소존</image:title></image:image>
+    <image:image><image:loc>https://teamjjfitness.co.kr/images/fac/bonggok-cardio-02.jpg</image:loc><image:title>팀JJ피트니스 봉곡점 유산소존</image:title></image:image>
+    <image:image><image:loc>https://teamjjfitness.co.kr/images/fac/bonggok-cardio-03.jpg</image:loc><image:title>팀JJ피트니스 봉곡점 유산소존</image:title></image:image>
+  </url>
 </urlset>

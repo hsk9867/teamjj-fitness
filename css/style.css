@@ -426,3 +426,23 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .cms-wait .hero-tit, .cms-wait .hero-sub, .cms-wait .bhero-tit, .cms-wait .intro-tit { visibility: hidden; }
 .panel-info dd em.sub { display: block; }
 .panel-info dd em.sub:empty { display: none; }
+
+/* ===== 자주 묻는 질문 (메인 · 지점 공용, src/seo.py 가 내용을 만든다) ===== */
+.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; border: 0; }
+.faq-home { max-width: 1400px; margin: 0 auto; padding: 0 var(--gut) clamp(90px, 10vw, 150px); scroll-margin-top: calc(var(--hd) + 24px); }
+.bsec.faq { padding-bottom: clamp(90px, 10vw, 150px); }
+.faq-list { border-top: 1px solid var(--line2); }
+.faq-list details { border-bottom: 1px solid var(--line2); }
+.faq-list summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 16px; padding: 22px 4px; font-size: clamp(16px, 1.25vw, 19px); font-weight: 700; line-height: 1.45; color: var(--tx); transition: color .2s; }
+.faq-list summary::-webkit-details-marker { display: none; }
+.faq-list summary::before { content: "Q"; flex: none; width: 22px; font-family: var(--en); font-style: italic; font-weight: 900; font-size: 1.15em; color: var(--red); }
+.faq-list summary::after { content: ""; flex: none; width: 9px; height: 9px; margin: -4px 8px 0 auto; border-right: 2px solid var(--tx3); border-bottom: 2px solid var(--tx3); transform: rotate(45deg); transition: transform .25s, border-color .2s; }
+.faq-list details[open] summary::after { transform: rotate(-135deg); margin-top: 4px; border-color: var(--red); }
+.faq-list summary:hover { color: #fff; }
+.faq-list summary:focus-visible { outline: 2px solid var(--red); outline-offset: 2px; }
+.faq-a { margin: 0; padding: 0 4px 26px 42px; max-width: 920px; color: var(--tx2); font-size: 15px; line-height: 1.8; word-break: keep-all; }
+.faq-a a { color: var(--tx); text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 860px) {
+  .faq-list summary { gap: 12px; padding: 18px 2px; }
+  .faq-a { padding: 0 2px 22px 36px; font-size: 14.5px; }
+}
