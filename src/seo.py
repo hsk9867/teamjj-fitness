@@ -108,7 +108,9 @@ def head(title, desc, path, image, size, image_alt, keywords, og_desc=None, geo=
 
 
 # 검색 등록 소유 확인 태그 (받으면 여기에 한 줄씩). 예: '<meta name="naver-site-verification" content="…">'
-VERIFY = []
+VERIFY = [
+    '<meta name="naver-site-verification" content="777e52311d65afb24471736e39c7acdf8944330f">',   # 네이버 서치어드바이저 (2026-11-09)
+]
 
 
 # ───────────────────────── 자주 묻는 질문 ─────────────────────────
