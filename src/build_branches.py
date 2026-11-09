@@ -4,6 +4,9 @@
 import glob, os
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
+SITE = 'https://teamjjfitness.co.kr'
+# data-cms / data-cms-href / data-cms-price … 속성은 관리자 페이지(/admin)에서 바꾼 값을 js/cms.js 가 덮어쓰는 자리 표시.
+# 여기 BRANCHES 값은 "원래대로" 를 눌렀을 때 돌아가는 기본값이 된다. 전화번호를 바꾸면 js/cms.js 의 TEL 도 같이 고칠 것.
 
 BRANCHES = [
   {
@@ -147,7 +150,7 @@ def fab_html(b):
     tel = tel_href(b['tel'])
     return (f'<div class="fab" id="fab" aria-label="빠른 연락">'
             f'  <a class="fab-btn fab-kakao" href="{tel}" aria-label="카카오톡 상담">{KAKAO_FAB_SVG}</a>'
-            f'  <a class="fab-btn fab-insta" href="{b["insta"]}" target="_blank" rel="noopener" aria-label="인스타그램">{INSTA_FAB_SVG}</a>'
+            f'  <a class="fab-btn fab-insta" data-cms-href="{b["key"]}.link.insta" href="{b["insta"]}" target="_blank" rel="noopener" aria-label="인스타그램">{INSTA_FAB_SVG}</a>'
             f'  <a class="fab-btn fab-tel" href="{tel}" aria-label="전화 상담">{TEL_FAB_SVG}</a>'
             f'</div>')
 
@@ -156,6 +159,7 @@ def build(b):
     k = b['key']
     cta = b['booking'] or tel_href(b['tel'])
     cta_blank = ' target="_blank" rel="noopener"' if b['booking'] else ''
+    cta_cms = f' data-cms-href="{k}.link.booking"' if b['booking'] else ''
 
     # 시설: 존별 사진 슬라이드 (images/fac/<key>-<zone>-NN.jpg, src/prep_fac_photos.py 로 생성)
     facs = []
@@ -180,34 +184,33 @@ def build(b):
 
     # 가격
     price_html = (
-        f'<div class="price"><p class="price-tit">MEMBERSHIP <em>{b["price_note"]}</em></p>{price_ul(b["price"])}'
-        f'<ul class="price-note">{"".join(f"<li>{x}</li>" for x in b["price_etc"])}</ul></div>')
+        f'<div class="price" data-cms-price="{k}"><p class="price-tit">MEMBERSHIP <em>{b["price_note"]}</em></p>{price_ul(b["price"])}'
+        f'<ul class="price-note" data-cms="{k}.price_etc" data-cms-fmt="lines">{"".join(f"<li>{x}</li>" for x in b["price_etc"])}</ul></div>')
     if b['pt']:
         price_html += (
-            f'<div class="price"><p class="price-tit">PERSONAL TRAINING <em>{b["pt_note"]}</em></p>{price_ul(b["pt"])}'
+            f'<div class="price" data-cms-pt="{k}"><p class="price-tit">PERSONAL TRAINING <em>{b["pt_note"]}</em></p>{price_ul(b["pt"])}'
             f'<ul class="price-note"><li>예약하기 → 스케줄 조율 → 체험비 입금 → 예약 확정 → 레슨 진행</li></ul></div>')
     else:
         price_html += (
-            f'<div class="pt-cta"><div><b>PERSONAL TRAINING</b><p>{b["pt_text"]}</p></div>'
-            f'<a class="btn red" href="{cta}"{cta_blank}>PT 상담 예약</a></div>')
+            f'<div class="pt-cta" data-cms-pt="{k}"><div><b>PERSONAL TRAINING</b><p data-cms="{k}.pt_text">{b["pt_text"]}</p></div>'
+            f'<a class="btn red"{cta_cms} href="{cta}"{cta_blank}>PT 상담 예약</a></div>')
 
     # 운영시간
     hours_li = ''.join(
-        f'<li class="{"off" if t == "휴무" else ""}"><span>{d}</span><b>{t}</b></li>' for d, t in b['hours'])
+        f'<li class="{"off" if "휴무" in t else ""}"><span>{d}</span><b>{t}</b></li>' for d, t in b['hours'])
     btns = []
     if b['booking']:
-        btns.append(f'<a class="btn red" href="{b["booking"]}" target="_blank" rel="noopener">네이버 상담 예약</a>')
+        btns.append(f'<a class="btn red" data-cms-href="{k}.link.booking" href="{b["booking"]}" target="_blank" rel="noopener">네이버 상담 예약</a>')
         btns.append(f'<a class="btn" href="{tel_href(b["tel"])}">전화하기</a>')
     else:
         btns.append(f'<a class="btn red" href="{tel_href(b["tel"])}">전화 상담</a>')
-    btns.append(f'<a class="btn" href="{b["place"]}" target="_blank" rel="noopener">네이버 지도</a>')
-    btns.append(f'<a class="btn" href="{b["insta"]}" target="_blank" rel="noopener">인스타그램</a>')
-    btns.append(f'<a class="btn" href="{b["blog"]}" target="_blank" rel="noopener">블로그</a>')
-    parking_note = f'<br><em>{b["parking_note"]}</em>' if b['parking_note'] else ''
+    btns.append(f'<a class="btn" data-cms-href="{k}.link.place" href="{b["place"]}" target="_blank" rel="noopener">네이버 지도</a>')
+    btns.append(f'<a class="btn" data-cms-href="{k}.link.insta" href="{b["insta"]}" target="_blank" rel="noopener">인스타그램</a>')
+    btns.append(f'<a class="btn" data-cms-href="{k}.link.blog" href="{b["blog"]}" target="_blank" rel="noopener">블로그</a>')
 
     # 다른 지점
     others = ''.join(
-        f'<a class="bcircle" href="{o["key"]}.html"><span class="bc-img"><img src="images/br-{o["key"]}.jpg" alt="" loading="lazy"></span>'
+        f'<a class="bcircle" href="{o["key"]}.html"><span class="bc-img"><img data-cms="{o["key"]}.img.circle" data-cms-attr="src" src="images/br-{o["key"]}.jpg" alt="" loading="lazy"></span>'
         f'<span class="bc-txt"><strong>{o["en"]}</strong><b>{o["ko"]}</b><small>{o["region"]}</small></span></a>'
         for o in BRANCHES if o['key'] != k)
 
@@ -224,15 +227,18 @@ def build(b):
 <meta property="og:type" content="website">
 <meta property="og:title" content="팀JJ피트니스 {b['ko']} | TEAM JJ FITNESS {b['en']}">
 <meta property="og:description" content="{b['intro']}">
-<meta property="og:image" content="images/bh-{k}.jpg">
+<meta property="og:image" content="{SITE}/images/bh-{k}.jpg">
+<meta property="og:url" content="{SITE}/{k}">
+<link rel="canonical" href="{SITE}/{k}">
 <link rel="icon" href="images/logo-full.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <link rel="stylesheet" href="css/style.css">
+<script src="js/cms.js"></script>
 </head>
-<body>
+<body data-branch="{k}">
 
 <header class="hd" id="top">
   <a class="hd-logo" href="index.html" aria-label="팀JJ피트니스 홈"><img src="images/logo-word.png" alt="TEAM JJ FITNESS"></a>
@@ -247,11 +253,11 @@ def build(b):
 </header>
 
 <main>
-  <section class="bhero" style="background-image:url(images/bh-{k}.jpg)" aria-label="{b['ko']} 소개">
+  <section class="bhero" data-cms-bg="{k}.img.hero" style="background-image:url(images/bh-{k}.jpg)" aria-label="{b['ko']} 소개">
     <div class="bhero-in">
       <h1 class="bhero-tit">{b['ko']}</h1>
-      <p class="bhero-sub"><small>{b['addr']} · {b['addr_note']}</small></p>
-      <ul class="bhero-chips">{chips}</ul>
+      <p class="bhero-sub"><small><span data-cms="{k}.addr">{b['addr']}</span> · <span data-cms="{k}.addr_note">{b['addr_note']}</span></small></p>
+      <ul class="bhero-chips" data-cms="{k}.chips" data-cms-fmt="lines">{chips}</ul>
     </div>
   </section>
 
@@ -290,20 +296,20 @@ def build(b):
     </div>
     <div class="hours-wrap">
       <div>
-        <p class="hours-big">{b['hours_big']}<small>{b['hours_sub']}</small></p>
-        <ul class="hours-table">
+        <p class="hours-big"><span data-cms="{k}.hours_big">{b['hours_big']}</span><small data-cms="{k}.hours_sub">{b['hours_sub']}</small></p>
+        <ul class="hours-table" data-cms-hours="{k}">
           {hours_li}
-          <li class="off"><span>정기휴무</span><b>{b['closed']}</b></li>
+          <li class="off" data-fixed><span>정기휴무</span><b data-cms="{k}.closed">{b['closed']}</b></li>
         </ul>
-        <p class="hours-note">{b['hours_note']}</p>
+        <p class="hours-note" data-cms="{k}.hours_note">{b['hours_note']}</p>
       </div>
       <div class="hours-side">
         <div class="panel-map" data-map="{b['map']}" data-name="팀JJ피트니스 {b['ko']}"></div>
         <dl class="panel-info">
-          <div><dt>주소</dt><dd>{b['addr']}<br><em>{b['addr_note']}</em></dd></div>
-          <div><dt>주차</dt><dd>{b['parking']}{parking_note}</dd></div>
-          <div><dt>대중교통</dt><dd><em>{b['bus']}</em></dd></div>
-          <div><dt>전화</dt><dd><a href="{tel_href(b['tel'])}">{b['tel']}</a></dd></div>
+          <div><dt>주소</dt><dd><span data-cms="{k}.addr">{b['addr']}</span><em class="sub" data-cms="{k}.addr_note">{b['addr_note']}</em></dd></div>
+          <div><dt>주차</dt><dd><span data-cms="{k}.parking">{b['parking']}</span><em class="sub" data-cms="{k}.parking_note">{b['parking_note']}</em></dd></div>
+          <div><dt>대중교통</dt><dd><em data-cms="{k}.bus">{b['bus']}</em></dd></div>
+          <div><dt>전화</dt><dd><a data-cms="{k}.tel" href="{tel_href(b['tel'])}">{b['tel']}</a></dd></div>
         </dl>
         <div class="panel-btns">{''.join(btns)}</div>
       </div>
@@ -324,8 +330,8 @@ def build(b):
     <div class="ft-brand">
       <img src="images/logo-word.png" alt="TEAM JJ FITNESS">
       <div class="ft-sns">
-        <a href="{b['insta']}" target="_blank" rel="noopener" aria-label="인스타그램">{INSTA_SVG}</a>
-        <a href="{b['blog']}" target="_blank" rel="noopener" aria-label="네이버 블로그">{BLOG_SVG}</a>
+        <a data-cms-href="{k}.link.insta" href="{b['insta']}" target="_blank" rel="noopener" aria-label="인스타그램">{INSTA_SVG}</a>
+        <a data-cms-href="{k}.link.blog" href="{b['blog']}" target="_blank" rel="noopener" aria-label="네이버 블로그">{BLOG_SVG}</a>
       </div>
     </div>
     <div class="ft-cols">
@@ -346,8 +352,8 @@ def build(b):
     <a href="daegok.html">대곡점</a>
     <a href="hyeonggok.html">형곡점</a>
     <a href="bonggok.html">봉곡점</a>
-    <a href="{b['insta']}" target="_blank" rel="noopener">인스타그램</a>
-    <a href="{cta}"{cta_blank}>상담 예약</a>
+    <a data-cms-href="{k}.link.insta" href="{b['insta']}" target="_blank" rel="noopener">인스타그램</a>
+    <a{cta_cms} href="{cta}"{cta_blank}>상담 예약</a>
   </nav>
   <div class="ft-giant" aria-hidden="true"><span>TEAM JJ</span></div>
 </footer>
@@ -356,6 +362,7 @@ def build(b):
 <script src="js/type.js"></script>
 <script src="js/branch.js"></script>
 <script src="js/fab.js"></script>
+<script src="js/track.js" defer></script>
 </body>
 </html>
 '''

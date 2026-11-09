@@ -1,0 +1,13 @@
+.git
+.wrangler
+node_modules
+wrangler.jsonc
+.assetsignore
+.gitignore
+worker.js
+migrations
+deploy
+src
+README.md
+*.bak
+__pycache__

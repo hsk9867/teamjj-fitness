@@ -1,0 +1,27 @@
+{
+  // 팀JJ피트니스 — Cloudflare Workers: 정적 파일(assets) + 관리자 API·방문 통계(worker.js + D1)
+  // 정적 파일이 있는 주소는 assets 가 먼저 응답하고, /api/* 와 /uploads/* 만 worker.js 로 간다.
+  "name": "teamjj-fitness",
+  "main": "worker.js",
+  "compatibility_date": "2025-01-01",
+  "workers_dev": true,   // teamjj-fitness.hsk9867.workers.dev 도 계속 열어 둔다(점검용)
+  // 커스텀 도메인 (Cloudflare 존 teamjjfitness.co.kr, 네임서버 patrick / val.ns.cloudflare.com — DNS 레코드·인증서는 자동 생성)
+  "routes": [
+    { "pattern": "teamjjfitness.co.kr", "custom_domain": true },
+    { "pattern": "www.teamjjfitness.co.kr", "custom_domain": true }
+  ],
+  "assets": {
+    "directory": "./",
+    "binding": "ASSETS",
+    "not_found_handling": "404-page",
+    "html_handling": "auto-trailing-slash"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "teamjj-db",
+      "database_id": "6bcaaea0-637f-4a1f-9dc0-d46960ab4c5f",
+      "migrations_dir": "migrations"
+    }
+  ]
+}

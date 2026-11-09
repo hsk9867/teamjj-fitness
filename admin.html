@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>팀JJ피트니스 관리자</title>
+<link rel="icon" href="images/logo-full.png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+  :root{--red:#E5171B;--ink:#111;--muted:#777;--line:#e4e4e4;--soft:#f5f5f5}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Pretendard Variable',Pretendard,system-ui,sans-serif;background:var(--soft);color:var(--ink);font-size:14px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  button,input,select,textarea{font:inherit;color:inherit}
+  .wrap{max-width:1080px;margin:0 auto;padding:24px 16px 80px}
+  header.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px;flex-wrap:wrap}
+  header.top h1{font-size:18px;font-weight:800;letter-spacing:-.02em}
+  header.top h1 span{color:var(--red)}
+  .tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+  .tabs button,.seg button{padding:9px 14px;border:1px solid var(--line);background:#fff;border-radius:999px;font-weight:600;cursor:pointer}
+  .tabs button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .seg{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0 6px}
+  .seg button{border-radius:9px;padding:8px 16px}
+  .seg button.on{background:var(--red);color:#fff;border-color:var(--red)}
+  .panel{display:none;background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px}
+  .panel.on{display:block}
+  .panel h2{font-size:16px;font-weight:800;margin-bottom:6px}
+  .panel .help{font-size:12.5px;color:var(--muted);margin-bottom:16px}
+  .field{display:grid;grid-template-columns:210px 1fr;gap:10px 16px;align-items:start;padding:12px 0;border-top:1px solid var(--line)}
+  .field label{font-weight:700;font-size:13px;padding-top:8px}
+  .field label small{display:block;font-weight:400;color:var(--muted);font-size:11.5px;word-break:break-all}
+  .field input[type=text],.field textarea,.row input[type=text],.row textarea,.row select,.login input,.pw input{width:100%;padding:9px 11px;border:1px solid #ccc;border-radius:8px;background:#fff}
+  .field textarea{min-height:68px;resize:vertical}
+  .imgf{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+  .imgf img{width:150px;height:100px;object-fit:cover;border-radius:8px;border:1px solid var(--line);background:#eee}
+  .actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:16px}
+  .btn{display:inline-block;padding:10px 16px;border-radius:9px;border:1px solid var(--ink);background:var(--ink);color:#fff;font-weight:700;cursor:pointer;text-decoration:none}
+  .btn.ghost{background:#fff;color:var(--ink)}
+  .btn.sm{padding:6px 10px;font-size:12px;border-radius:7px}
+  .btn:disabled{opacity:.5;cursor:default}
+  .msg{font-size:12.5px;color:var(--muted)}
+  .msg.ok{color:#0a7a2f}.msg.err{color:var(--red)}
+  .login{max-width:380px;margin:60px auto;background:#fff;border:1px solid var(--line);border-radius:14px;padding:26px}
+  .login h1{font-size:18px;font-weight:800;margin-bottom:6px}
+  .login p.help{font-size:12.5px;color:var(--muted);margin-bottom:14px}
+  .login input{margin-bottom:10px}
+  table.rows{width:100%;border-collapse:collapse;margin-top:8px}
+  table.rows th{font-size:11.5px;color:var(--muted);text-align:left;padding:6px 6px;border-bottom:1px solid var(--line)}
+  table.rows td{padding:6px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+  table.rows td.ctl{white-space:nowrap}
+  .row textarea{min-height:76px}
+  .grp{margin-top:22px;padding-top:18px;border-top:2px solid var(--ink)}
+  .grp h3{font-size:15px;font-weight:800;margin-bottom:4px}
+  .grp p.help{margin-bottom:6px}
+  .thumbs{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-top:10px}
+  .thumb{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fafafa}
+  .thumb img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover}
+  .thumb .b{padding:8px}
+  .thumb input[type=text]{width:100%;padding:5px 7px;border:1px solid #ddd;border-radius:6px;font-size:12px}
+  .thumb .c{display:flex;gap:4px;margin-top:6px;flex-wrap:wrap}
+  .thumb .c button{padding:3px 7px;font-size:11.5px;border:1px solid #ccc;background:#fff;border-radius:5px;cursor:pointer}
+  .thumb label.w{font-size:11.5px;display:flex;gap:4px;align-items:center;margin-top:6px}
+  .empty{padding:18px;border:1px dashed #ccc;border-radius:10px;color:var(--muted);font-size:12.5px;margin-top:10px}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}
+  .stat{background:var(--soft);border-radius:12px;padding:14px}
+  .stat b{display:block;font-size:26px;font-weight:800;letter-spacing:-.03em;line-height:1.1}
+  .stat span{font-size:12px;color:var(--muted)}
+  .stat small{display:block;font-size:11.5px;color:var(--muted);margin-top:2px}
+  .bars{display:flex;align-items:flex-end;gap:3px;height:140px;border-bottom:1px solid var(--line);padding-bottom:4px}
+  .bars div{flex:1;background:var(--ink);border-radius:3px 3px 0 0;min-height:2px;position:relative}
+  .bars div i{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);font-style:normal;font-size:10px;color:var(--muted);opacity:0}
+  .bars div:hover{background:var(--red)} .bars div:hover i{opacity:1}
+  .axis{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin:4px 0 16px}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .two table{width:100%;border-collapse:collapse}
+  .two th{text-align:left;font-size:12px;color:var(--muted);padding:6px 4px;border-bottom:1px solid var(--line)}
+  .two td{padding:6px 4px;border-bottom:1px solid var(--line);font-size:13px}
+  .two td:last-child{text-align:right;font-weight:700}
+  .pw{max-width:420px}
+  .pw input{margin-bottom:8px}
+  @media (max-width:720px){.field{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.two{grid-template-columns:1fr}.wrap{padding:16px 12px 60px}table.rows th:nth-child(n+4):not(:last-child){display:none}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+(async function () {
+  'use strict';
+  const app = document.getElementById('app');
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const api = async (path, opt = {}) => {
+    const r = await fetch('/api/' + path, { credentials: 'same-origin', ...opt });
+    const d = await r.json().catch(() => ({}));
+    if (!r.ok) throw new Error(d.error || ('오류 ' + r.status));
+    return d;
+  };
+  const postJson = (path, body) => api(path, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+
+  const BRANCHES = [['okgye', '옥계점'], ['daegok', '대곡점'], ['hyeonggok', '형곡점'], ['bonggok', '봉곡점']];
+  const ZONES = [['machine', '머신존'], ['free', '프리웨이트존'], ['cardio', '유산소존'], ['locker', '탈의실']];
+  // 기본값을 읽어 올 고객 화면 (지점 페이지를 먼저 읽어 지점 정보의 기준으로 삼는다)
+  const PAGES = BRANCHES.map(b => b[0]).concat(['']);
+
+  // ───────── 문구 항목: [키, 이름, 종류(text|rich|lines|url|img), 도움말] ─────────
+  const HOME_FIELDS = [
+    ['home.hero.title', '메인 큰 제목', 'rich', '줄바꿈 가능 · **단어** 는 빨간 글자'],
+    ['home.hero.sub', '메인 작은 문구', 'rich'],
+    ['home.intro.l1', '소개 문구 첫 줄', 'text'],
+    ['home.intro.l2', '소개 문구 둘째 줄', 'rich'],
+    ['home.ba.sub', '비포애프터 설명', 'rich'],
+    ['home.rev.sub', '회원 후기 설명', 'rich'],
+    ['site.kakao', '카카오톡 채널 주소', 'url', '예: https://pf.kakao.com/_xxxxx — 넣으면 오른쪽 아래 카톡 버튼이 채널로 연결됩니다'],
+    ['site.insta', '대표 인스타그램 주소', 'url'],
+    ['site.blog', '대표 블로그 주소', 'url'],
+  ];
+  const branchFields = k => [
+    ['기본 정보'],
+    [k + '.addr', '주소', 'text'],
+    [k + '.addr_note', '주소 보조 설명', 'text', '건물 이름·찾아오는 길'],
+    [k + '.tel', '전화번호', 'text', '바꾸면 사이트의 모든 표기와 전화 버튼이 같이 바뀝니다'],
+    [k + '.parking', '주차', 'text'],
+    [k + '.parking_note', '주차 보조 설명', 'text'],
+    [k + '.bus', '대중교통', 'text'],
+    [k + '.chips', '지점 페이지 강조 문구', 'lines', '한 줄에 하나씩 (지점 페이지 상단의 네모 칩)'],
+    ['운영시간'],
+    [k + '.hours_big', '큰 글씨', 'text', '예: 24 HOURS'],
+    [k + '.hours_sub', '큰 글씨 아래 설명', 'text'],
+    [k + '.closed', '정기휴무', 'text'],
+    [k + '.hours_note', '운영 안내', 'text'],
+    ['메인 화면 지점 찾기 카드'],
+    [k + '.home.desc', '지점 소개문', 'rich'],
+    [k + '.home.hours', '운영 요약', 'text'],
+    [k + '.home.hours2', '운영 보조 설명', 'rich'],
+    ['가격 안내 문구'],
+    [k + '.price_etc', '가격표 아래 안내', 'lines', '한 줄에 하나씩'],
+    [k + '.pt_text', 'PT 안내문', 'rich', 'PT 가격표를 쓰지 않는 지점에만 보입니다'],
+    ['링크'],
+    [k + '.link.booking', '네이버 예약 주소', 'url'],
+    [k + '.link.place', '네이버 지도 주소', 'url'],
+    [k + '.link.insta', '인스타그램 주소', 'url'],
+    [k + '.link.blog', '블로그 주소', 'url'],
+    [k + '.kakao', '카카오톡 채널 주소(지점)', 'url', '비우면 메인의 카카오톡 채널 주소를 씁니다'],
+    ['대표 사진'],
+    [k + '.img.circle', '메인 원형 버튼 사진', 'img'],
+    [k + '.img.hero', '지점 페이지 상단 사진', 'img'],
+  ];
+
+  let content = {};
+  const defaults = { text: {}, price: {}, hours: {}, reviews: [], slides: {}, fac: {} };
+
+  // 고객 화면 HTML 에서 기본값을 읽는다 (저장값이 없을 때 보여주고 "원래대로" 에 쓴다)
+  const plain = el => {
+    const fmt = el.getAttribute('data-cms-fmt');
+    if (fmt === 'lines') return [...el.querySelectorAll('li')].map(li => li.textContent.trim()).join('\n');
+    if (fmt === 'rich') return el.innerHTML.replace(/<br\s*\/?>/gi, '\n').replace(/<span class="hl">(.*?)<\/span>/gi, '**$1**').replace(/<[^>]+>/g, '').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').trim();
+    return el.textContent.trim();
+  };
+  const rowsOf = ul => ul ? [...ul.querySelectorAll('li')].map(li => ({ k: (li.querySelector('span') || {}).textContent || '', v: (li.querySelector('b') || {}).textContent || '' })) : [];
+  async function loadDefaults() {
+    for (const page of PAGES) {
+      const h = await fetch('/' + page + '?admin=' + Date.now()).then(r => r.text());
+      const d = new DOMParser().parseFromString(h, 'text/html');
+      const T = defaults.text;
+      d.querySelectorAll('[data-cms]').forEach(el => {
+        const k = el.getAttribute('data-cms'); if (k in T) return;
+        const attr = el.getAttribute('data-cms-attr');
+        T[k] = attr ? el.getAttribute(attr) : plain(el);
+      });
+      d.querySelectorAll('[data-cms-href]').forEach(a => { const k = a.getAttribute('data-cms-href'); if (!(k in T)) T[k] = a.getAttribute('href'); });
+      d.querySelectorAll('[data-cms-bg]').forEach(el => { const k = el.getAttribute('data-cms-bg'); const m = (el.getAttribute('style') || '').match(/url\(["']?([^"')]+)/); if (m && !(k in T)) T[k] = m[1]; });
+      if (page) {            // 지점 페이지
+        const box = d.querySelector('[data-cms-price="' + page + '"]'), pt = d.querySelector('.price[data-cms-pt="' + page + '"]');
+        if (box) defaults.price[page] = {
+          note: (box.querySelector('.price-tit em') || {}).textContent || '', rows: rowsOf(box.querySelector('ul:not(.price-note)')),
+          pt_note: pt ? (pt.querySelector('.price-tit em') || {}).textContent || '' : '', pt: pt ? rowsOf(pt.querySelector('ul:not(.price-note)')) : [],
+        };
+        const ht = d.querySelector('[data-cms-hours="' + page + '"]');
+        if (ht) defaults.hours[page] = [...ht.querySelectorAll('li:not([data-fixed])')].map(li => ({ k: li.querySelector('span').textContent, v: li.querySelector('b').textContent }));
+        d.querySelectorAll('.zone[data-zone]').forEach(z => {
+          defaults.fac[page + '.' + z.getAttribute('data-zone')] = [...z.querySelectorAll('.zslide img')].map(im => ({ src: im.getAttribute('src'), alt: im.getAttribute('alt') || '' }));
+        });
+      } else {               // 메인
+        const rv = d.getElementById('revTrack');
+        if (rv) defaults.reviews = [...rv.querySelectorAll('.rev-card')].map(c => ({
+          stars: c.querySelectorAll('.rev-stars svg').length || 5, text: (c.querySelector('blockquote') || {}).textContent || '',
+          tags: [...c.querySelectorAll('.rev-tags li')].map(li => li.textContent.trim()).join(', '),
+          name: (c.querySelector('figcaption b') || {}).textContent || '', src: (c.querySelector('figcaption span') || {}).textContent || '',
+        }));
+        defaults.slides['slides.hero'] = [...d.querySelectorAll('#heroSlides .hero-slide')].map(el => ({ src: ((el.getAttribute('style') || '').match(/url\(["']?([^"')]+)/) || [])[1] || '', lite: el.classList.contains('lite') }));
+        const ba = d.getElementById('baTrack');
+        if (ba) defaults.slides['slides.ba'] = [...ba.querySelectorAll('img')].map(im => ({ src: im.getAttribute('src'), alt: im.getAttribute('alt') || '' }));
+        const half = el => { const a = el ? [...el.querySelectorAll('img')].map(im => ({ src: im.getAttribute('src') })) : []; return a.slice(0, a.length / 2); };
+        defaults.slides['slides.fast'] = half(d.getElementById('fastA')).concat(half(d.getElementById('fastB')));
+      }
+    }
+    BRANCHES.forEach(b => { if (!(b[0] + '.kakao' in defaults.text)) defaults.text[b[0] + '.kakao'] = ''; });
+  }
+  async function loadContent() { content = await api('content'); }
+  async function save(key, value) { await api('content/' + key, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(value) }); content[key] = value; }
+  async function reset(key) { await api('content/' + key, { method: 'DELETE' }); delete content[key]; }
+  function note(el, text, cls) { el.textContent = text; el.className = 'msg ' + (cls || ''); if (cls === 'ok') setTimeout(() => { if (el.textContent === text) el.textContent = ''; }, 2500); }
+  const SAVED = '저장했습니다. 사이트를 새로고침하면 반영됩니다(최대 30초).';
+
+  // ───────── 로그인 / 처음 설정 ─────────
+  function renderLogin(setup, err) {
+    app.innerHTML = '<form class="login" id="loginForm"><h1>팀JJ피트니스 <span style="color:var(--red)">관리자</span></h1><p class="help">' + (setup ? '처음 접속입니다. 앞으로 쓸 관리자 비밀번호를 정해 주세요 (4자 이상).' : '관리자 비밀번호를 입력하세요.') + '</p><input type="password" id="pw" placeholder="비밀번호" autocomplete="' + (setup ? 'new-password' : 'current-password') + '" required minlength="4">' + (setup ? '<input type="password" id="pw2" placeholder="비밀번호 다시 입력" autocomplete="new-password" required minlength="4">' : '') + '<button class="btn" style="width:100%">' + (setup ? '비밀번호 설정하고 시작' : '로그인') + '</button><p class="msg err" style="margin-top:10px">' + esc(err || '') + '</p></form>';
+    document.getElementById('loginForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      const pw = document.getElementById('pw').value;
+      try {
+        if (setup) { if (pw !== document.getElementById('pw2').value) throw new Error('두 비밀번호가 다릅니다.'); await postJson('setup', { password: pw }); }
+        else await postJson('login', { password: pw });
+        boot();
+      } catch (err) { renderLogin(setup, err.message); }
+    });
+  }
+
+  const TABS = [['stats', '방문 통계'], ['home', '메인 문구'], ['branch', '지점 정보 · 가격'], ['reviews', '회원 후기'], ['photos', '메인 사진'], ['fac', '지점 시설 사진']];
+  async function boot() {
+    let me; try { me = await api('me'); } catch (e) { app.innerHTML = '<div class="login"><h1>연결 실패</h1><p class="help">' + esc(e.message) + '<br>관리자 기능은 Cloudflare 에 배포된 주소에서만 동작합니다. D1 마이그레이션(npx wrangler d1 migrations apply teamjj-db --remote)을 실행했는지도 확인하세요.</p></div>'; return; }
+    if (me.setup) return renderLogin(true);
+    if (!me.admin) return renderLogin(false);
+    app.innerHTML = '<div class="wrap"><header class="top"><h1>팀JJ피트니스 <span>관리자</span></h1><div><button class="btn ghost sm" id="pwBtn">비밀번호 변경</button> <button class="btn ghost sm" id="logout">로그아웃</button> <a class="btn sm" href="/" target="_blank">사이트 보기</a></div></header><p class="msg">불러오는 중…</p></div>';
+    document.getElementById('logout').onclick = async () => { await postJson('logout', {}); renderLogin(false); };
+    const show = t => { document.querySelectorAll('.tabs button').forEach(x => x.classList.toggle('on', x.dataset.t === t)); document.querySelectorAll('.panel').forEach(p => p.classList.toggle('on', p.id === 'p-' + t)); };
+    document.getElementById('pwBtn').onclick = () => show('pw');
+    try { await Promise.all([loadDefaults(), loadContent()]); } catch (e) { app.querySelector('.wrap').insertAdjacentHTML('beforeend', '<p class="msg err">불러오기 실패: ' + esc(e.message) + '</p>'); return; }
+    const wrap = app.querySelector('.wrap'); wrap.querySelector('.msg').remove();
+    wrap.insertAdjacentHTML('beforeend', '<nav class="tabs">' + TABS.map((t, i) => '<button data-t="' + t[0] + '"' + (i ? '' : ' class="on"') + '>' + t[1] + '</button>').join('') + '</nav>' + TABS.concat([['pw']]).map((t, i) => '<section class="panel' + (i ? '' : ' on') + '" id="p-' + t[0] + '"></section>').join(''));
+    wrap.querySelectorAll('.tabs button').forEach(b => b.onclick = () => show(b.dataset.t));
+    renderHome(); renderBranch(BRANCHES[0][0]); renderReviews(); renderPhotos(); renderFac(BRANCHES[0][0]); renderStats(); renderPw();
+  }
+
+  // 비밀번호 변경
+  function renderPw() {
+    const p = document.getElementById('p-pw');
+    p.innerHTML = '<h2>비밀번호 변경</h2><p class="help">4자 이상. 바꾼 뒤에도 현재 로그인은 유지됩니다.</p><form class="pw" id="pwForm"><input type="password" id="cur" placeholder="현재 비밀번호" autocomplete="current-password" required><input type="password" id="nx" placeholder="새 비밀번호" autocomplete="new-password" required minlength="4"><input type="password" id="nx2" placeholder="새 비밀번호 다시" autocomplete="new-password" required minlength="4"><div class="actions"><button class="btn">변경</button><span class="msg" id="pwMsg"></span></div></form>';
+    p.querySelector('#pwForm').addEventListener('submit', async e => {
+      e.preventDefault(); const m = p.querySelector('#pwMsg');
+      if (p.querySelector('#nx').value !== p.querySelector('#nx2').value) return note(m, '새 비밀번호 두 개가 다릅니다.', 'err');
+      try { await postJson('password', { current: p.querySelector('#cur').value, next: p.querySelector('#nx').value }); note(m, '바꿨습니다.', 'ok'); e.target.reset(); } catch (err) { note(m, err.message, 'err'); }
+    });
+  }
+
+  // ───────── 사진 올리기 ─────────
+  function resizeImage(file, max, q) {
+    return new Promise((res, rej) => {
+      const img = new Image(); const url = URL.createObjectURL(file);
+      img.onload = () => {
+        const r = Math.min(1, max / Math.max(img.width, img.height)); const c = document.createElement('canvas');
+        c.width = Math.round(img.width * r); c.height = Math.round(img.height * r);
+        c.getContext('2d').drawImage(img, 0, 0, c.width, c.height); URL.revokeObjectURL(url);
+        c.toBlob(b => b ? res(b) : rej(new Error('변환 실패')), 'image/jpeg', q);
+      };
+      img.onerror = () => rej(new Error('이미지를 읽을 수 없습니다 (JPG·PNG 로 올려 주세요)')); img.src = url;
+    });
+  }
+  async function upload(file, max) {
+    let blob;
+    for (const step of [[max || 1600, 0.82], [1400, 0.8], [1100, 0.76]]) { blob = await resizeImage(file, step[0], step[1]); if (blob.size <= 1400 * 1024) break; }
+    const d = await api('upload', { method: 'POST', headers: { 'Content-Type': 'image/jpeg' }, body: blob });
+    return d.url;
+  }
+
+  // ───────── 문구 묶음 (메인 / 지점 공용) ─────────
+  function fieldsHtml(fields) {
+    const text = content.text || {};
+    return fields.map(f => {
+      if (f.length === 1) return '<div class="grp"><h3>' + esc(f[0]) + '</h3></div>';
+      const k = f[0], type = f[2], cur = (k in text) ? text[k] : '', def = defaults.text[k] || '';
+      const label = '<label>' + esc(f[1]) + '<small>' + esc(f[3] || (type === 'img' ? '' : '원래: ' + def.replace(/\n/g, ' / ').slice(0, 60))) + '</small></label>';
+      if (type === 'img') return '<div class="field">' + label + '<div class="imgf"><img src="' + esc(cur || def) + '" alt=""><input type="hidden" data-k="' + k + '" value="' + esc(cur) + '" data-def="' + esc(def) + '"><label class="btn ghost sm" style="cursor:pointer">사진 바꾸기 <input type="file" accept="image/*" hidden data-up></label><button type="button" class="btn ghost sm" data-imgreset>원래 사진</button></div></div>';
+      if (type === 'rich' || type === 'lines') return '<div class="field">' + label + '<textarea data-k="' + k + '" placeholder="' + esc(def) + '"' + (type === 'lines' ? ' style="min-height:110px"' : '') + '>' + esc(cur) + '</textarea></div>';
+      return '<div class="field">' + label + '<input type="text" data-k="' + k + '" value="' + esc(cur) + '" placeholder="' + esc(def) + '"' + (type === 'url' ? ' inputmode="url"' : '') + '></div>';
+    }).join('');
+  }
+  function bindFields(box, msgEl, rerender) {
+    box.addEventListener('change', async e => {
+      if (!e.target.hasAttribute('data-up')) return;
+      const f = e.target.files[0], wrap = e.target.closest('.imgf'); e.target.value = ''; if (!f) return;
+      try { note(msgEl(), '사진 올리는 중…'); const url = await upload(f, 1920); wrap.querySelector('input[type=hidden]').value = url; wrap.querySelector('img').src = url; note(msgEl(), '올렸습니다. 저장을 눌러 반영하세요.', 'ok'); }
+      catch (err) { note(msgEl(), '업로드 실패: ' + err.message, 'err'); }
+    });
+    box.addEventListener('click', e => {
+      if (!e.target.hasAttribute('data-imgreset')) return;
+      const wrap = e.target.closest('.imgf'), h = wrap.querySelector('input[type=hidden]'); h.value = ''; wrap.querySelector('img').src = h.dataset.def;
+    });
+    box.querySelector('[data-savetext]').onclick = async () => {
+      const out = { ...(content.text || {}) };
+      let bad = '';
+      box.querySelectorAll('[data-k]').forEach(el => {
+        const v = el.value.trim();
+        if (v && el.getAttribute('inputmode') === 'url' && !/^https?:\/\//i.test(v)) bad = v;
+        if (v) out[el.dataset.k] = v; else delete out[el.dataset.k];
+      });
+      if (bad) return note(msgEl(), '주소는 https:// 로 시작해야 합니다: ' + bad, 'err');
+      try { await save('text', out); note(msgEl(), SAVED, 'ok'); } catch (e) { note(msgEl(), '저장 실패: ' + e.message, 'err'); }
+    };
+    box.querySelector('[data-resettext]').onclick = async () => {
+      if (!confirm('이 화면의 문구·링크·대표 사진을 모두 원래대로 되돌릴까요?')) return;
+      const out = { ...(content.text || {}) };
+      box.querySelectorAll('[data-k]').forEach(el => delete out[el.dataset.k]);
+      try { await save('text', out); rerender(); } catch (e) { alert(e.message); }
+    };
+  }
+  const textActions = label => '<div class="actions"><button class="btn" data-savetext>' + label + '</button><button class="btn ghost" data-resettext>원래대로</button><span class="msg" data-textmsg></span></div>';
+
+  // 메인 문구
+  function renderHome() {
+    const p = document.getElementById('p-home');
+    p.innerHTML = '<h2>메인 문구</h2><p class="help">비워 두면 원래 문구가 그대로 보입니다. 줄바꿈은 그대로 반영되고, **단어** 처럼 별 두 개로 감싸면 빨간 글자가 됩니다.</p><div data-box>' + fieldsHtml(HOME_FIELDS) + textActions('메인 문구 저장') + '</div>';
+    bindFields(p.querySelector('[data-box]'), () => p.querySelector('[data-textmsg]'), renderHome);
+  }
+
+  // 표 편집 공통 (항목·값 두 칸)
+  function kvTable(host, rows, heads) {
+    host.innerHTML = '<table class="rows"><thead><tr><th>' + heads[0] + '</th><th>' + heads[1] + '</th><th></th></tr></thead><tbody></tbody></table>';
+    const tb = host.querySelector('tbody');
+    const add = r => tb.insertAdjacentHTML('beforeend', '<tr class="row"><td><input type="text" data-f="k" value="' + esc(r.k) + '"></td><td><input type="text" data-f="v" value="' + esc(r.v) + '"></td><td class="ctl"><button type="button" class="btn ghost sm" data-up>↑</button> <button type="button" class="btn ghost sm" data-del>삭제</button></td></tr>');
+    rows.forEach(add);
+    host.addEventListener('click', e => {
+      const tr = e.target.closest('tr'); if (!tr) return;
+      if (e.target.hasAttribute('data-del')) tr.remove();
+      else if (e.target.hasAttribute('data-up') && tr.previousElementSibling) tr.parentNode.insertBefore(tr, tr.previousElementSibling);
+    });
+    return { add: () => add({ k: '', v: '' }), read: () => [...tb.querySelectorAll('tr')].map(tr => ({ k: tr.querySelector('[data-f=k]').value.trim(), v: tr.querySelector('[data-f=v]').value.trim() })).filter(r => r.k && r.v) };
+  }
+  const seg = cur => '<div class="seg">' + BRANCHES.map(b => '<button data-b="' + b[0] + '"' + (b[0] === cur ? ' class="on"' : '') + '>' + b[1] + '</button>').join('') + '</div>';
+
+  // 지점 정보 · 가격
+  function renderBranch(k) {
+    const p = document.getElementById('p-branch');
+    const pk = 'price.' + k, hk = 'hours.' + k;
+    const dp = defaults.price[k] || { note: '', rows: [], pt_note: '', pt: [] };
+    const sp = (content[pk] && typeof content[pk] === 'object') ? content[pk] : {};
+    const pv = { note: sp.note || dp.note, rows: (sp.rows && sp.rows.length) ? sp.rows : dp.rows, pt_note: sp.pt_note || dp.pt_note, pt: (sp.pt && sp.pt.length) ? sp.pt : dp.pt };
+    const hours = (Array.isArray(content[hk]) && content[hk].length) ? content[hk] : (defaults.hours[k] || []);
+    p.innerHTML = '<h2>지점 정보 · 가격</h2><p class="help">지점을 고른 뒤 고치세요. 가격표·운영시간표·문구는 각각 저장 버튼이 따로 있습니다.</p>' + seg(k) +
+      '<div class="grp"><h3>회원권 가격표</h3><p class="help">금액은 숫자와 쉼표만 (예: 200,000) — "원" 은 자동으로 붙습니다.</p><div class="field"><label>가격표 옆 안내<small>예: 운동복 + 수건 포함</small></label><input type="text" id="prNote" value="' + esc(pv.note) + '"></div><div id="prRows"></div><div class="actions"><button class="btn ghost sm" id="prAdd">행 추가</button></div></div>' +
+      '<div class="grp"><h3>PT 가격표</h3><p class="help">행을 넣으면 그 지점에 PT 가격표가 보입니다. PT 행을 모두 지우고 저장하면 원래 구성(상담 안내문 또는 기본 PT 가격표)으로 돌아갑니다.</p><div class="field"><label>PT 가격표 옆 안내</label><input type="text" id="ptNote" value="' + esc(pv.pt_note) + '"></div><div id="ptRows"></div><div class="actions"><button class="btn ghost sm" id="ptAdd">행 추가</button></div><div class="actions"><button class="btn" id="prSave">가격표 저장</button><button class="btn ghost" id="prReset">가격표 원래대로</button><span class="msg" id="prMsg"></span></div></div>' +
+      '<div class="grp"><h3>요일별 운영시간</h3><p class="help">지점 페이지의 운영시간 표입니다. 쉬는 날은 시간 칸에 "휴무" 라고 쓰면 빨갛게 표시됩니다.</p><div id="hrRows"></div><div class="actions"><button class="btn ghost sm" id="hrAdd">행 추가</button><button class="btn sm" id="hrSave">운영시간 저장</button><button class="btn ghost sm" id="hrReset">원래대로</button><span class="msg" id="hrMsg"></span></div></div>' +
+      '<div data-box>' + fieldsHtml(branchFields(k)) + textActions('지점 문구·링크·사진 저장') + '</div>';
+    p.querySelectorAll('.seg button').forEach(b => b.onclick = () => renderBranch(b.dataset.b));
+    const pr = kvTable(p.querySelector('#prRows'), pv.rows, ['기간', '금액']), pt = kvTable(p.querySelector('#ptRows'), pv.pt, ['상품', '금액']), hr = kvTable(p.querySelector('#hrRows'), hours, ['요일', '시간']);
+    p.querySelector('#prAdd').onclick = pr.add; p.querySelector('#ptAdd').onclick = pt.add; p.querySelector('#hrAdd').onclick = hr.add;
+    p.querySelector('#prSave').onclick = async () => {
+      const rows = pr.read(); if (!rows.length) return note(p.querySelector('#prMsg'), '회원권 가격을 한 줄 이상 넣어 주세요.', 'err');
+      try { await save(pk, { note: p.querySelector('#prNote').value.trim(), rows, pt_note: p.querySelector('#ptNote').value.trim(), pt: pt.read() }); note(p.querySelector('#prMsg'), SAVED, 'ok'); } catch (e) { note(p.querySelector('#prMsg'), '저장 실패: ' + e.message, 'err'); }
+    };
+    p.querySelector('#prReset').onclick = async () => { if (!confirm('이 지점 가격표를 원래대로 되돌릴까요?')) return; try { await reset(pk); renderBranch(k); } catch (e) { alert(e.message); } };
+    p.querySelector('#hrSave').onclick = async () => {
+      const rows = hr.read(); if (!rows.length) return note(p.querySelector('#hrMsg'), '한 줄 이상 넣어 주세요.', 'err');
+      try { await save(hk, rows); note(p.querySelector('#hrMsg'), SAVED, 'ok'); } catch (e) { note(p.querySelector('#hrMsg'), '저장 실패: ' + e.message, 'err'); }
+    };
+    p.querySelector('#hrReset').onclick = async () => { if (!confirm('운영시간표를 원래대로 되돌릴까요?')) return; try { await reset(hk); renderBranch(k); } catch (e) { alert(e.message); } };
+    bindFields(p.querySelector('[data-box]'), () => p.querySelector('[data-textmsg]'), () => renderBranch(k));
+  }
+
+  // 회원 후기
+  function renderReviews() {
+    const p = document.getElementById('p-reviews');
+    const rows = (Array.isArray(content.reviews) && content.reviews.length) ? content.reviews : defaults.reviews;
+    p.innerHTML = '<h2>회원 후기</h2><p class="help">메인 화면 후기 카드입니다. 네이버 리뷰를 옮길 때 이름은 일부를 * 로 가려 주세요. 태그는 쉼표로 구분합니다.</p><table class="rows"><thead><tr><th style="width:64px">별점</th><th>내용</th><th style="width:170px">태그</th><th style="width:110px">이름</th><th style="width:170px">출처</th><th></th></tr></thead><tbody></tbody></table><div class="actions"><button class="btn ghost sm" id="rvAdd">후기 추가</button><button class="btn sm" id="rvSave">저장</button><button class="btn ghost sm" id="rvReset">원래대로</button><span class="msg" id="rvMsg"></span></div>';
+    const tb = p.querySelector('tbody');
+    const addRow = r => tb.insertAdjacentHTML('beforeend', '<tr class="row"><td><select data-f="stars">' + [5, 4, 3, 2, 1].map(n => '<option' + (n === (r.stars || 5) ? ' selected' : '') + '>' + n + '</option>').join('') + '</select></td><td><textarea data-f="text">' + esc(r.text) + '</textarea></td><td><textarea data-f="tags" placeholder="기구가 다양해요, 친절해요">' + esc(r.tags) + '</textarea></td><td><input type="text" data-f="name" value="' + esc(r.name) + '"></td><td><input type="text" data-f="src" value="' + esc(r.src) + '" placeholder="옥계점 · 네이버 방문자 리뷰"></td><td class="ctl"><button class="btn ghost sm" data-up>↑</button> <button class="btn ghost sm" data-del>삭제</button></td></tr>');
+    rows.forEach(addRow);
+    tb.addEventListener('click', e => { const tr = e.target.closest('tr'); if (!tr) return; if (e.target.hasAttribute('data-del')) tr.remove(); else if (e.target.hasAttribute('data-up') && tr.previousElementSibling) tr.parentNode.insertBefore(tr, tr.previousElementSibling); });
+    p.querySelector('#rvAdd').onclick = () => addRow({ stars: 5, text: '', tags: '', name: '', src: '' });
+    p.querySelector('#rvSave').onclick = async () => {
+      const g = (tr, f) => tr.querySelector('[data-f=' + f + ']').value.trim();
+      const out = [...tb.querySelectorAll('tr')].map(tr => ({ stars: parseInt(g(tr, 'stars'), 10), text: g(tr, 'text'), tags: g(tr, 'tags'), name: g(tr, 'name'), src: g(tr, 'src') })).filter(r => r.text);
+      if (!out.length) return note(p.querySelector('#rvMsg'), '후기를 한 개 이상 넣어 주세요.', 'err');
+      try { await save('reviews', out); note(p.querySelector('#rvMsg'), SAVED, 'ok'); } catch (e) { note(p.querySelector('#rvMsg'), '저장 실패: ' + e.message, 'err'); }
+    };
+    p.querySelector('#rvReset').onclick = async () => { if (!confirm('원래 후기로 되돌릴까요?')) return; try { await reset('reviews'); renderReviews(); } catch (e) { alert(e.message); } };
+  }
+
+  // 사진 묶음 공통: opt = { key, title, help, def, max, flag:[필드, 라벨], alt }
+  function photoGroup(host, opt) {
+    host.insertAdjacentHTML('beforeend', '<div class="grp"><h3>' + esc(opt.title) + '</h3>' + (opt.help ? '<p class="help">' + esc(opt.help) + '</p>' : '') + '<div class="thumbs"></div><div class="actions"><label class="btn ghost sm" style="cursor:pointer">사진 추가 <input type="file" accept="image/*" multiple hidden></label><button class="btn sm" data-save>저장</button><button class="btn ghost sm" data-reset>원래대로</button><span class="msg"></span></div></div>');
+    const g = host.lastElementChild, box = g.querySelector('.thumbs'), msg = g.querySelector('.msg');
+    const init = () => ((Array.isArray(content[opt.key]) && content[opt.key].length) ? content[opt.key] : (opt.def || [])).map(x => ({ ...x }));
+    let list = init();
+    const draw = () => {
+      box.innerHTML = list.map((s, i) => '<div class="thumb" data-i="' + i + '"><img src="' + esc(s.src) + '" alt="" loading="lazy"><div class="b">' + (opt.alt ? '<input type="text" value="' + esc(s.alt || '') + '" placeholder="사진 설명(검색용)" data-alt>' : '') + (opt.flag ? '<label class="w"><input type="checkbox" data-flag' + (s[opt.flag[0]] ? ' checked' : '') + '> ' + esc(opt.flag[1]) + '</label>' : '') + '<div class="c"><button data-l>←</button><button data-r>→</button><button data-x>삭제</button></div></div></div>').join('') || '';
+      box.style.display = list.length ? '' : 'none';
+      let em = g.querySelector('.empty'); if (em) em.remove();
+      if (!list.length) box.insertAdjacentHTML('afterend', '<p class="empty">아직 사진이 없습니다. "사진 추가" 로 올려 주세요.</p>');
+    };
+    draw();
+    box.addEventListener('click', e => {
+      const t = e.target.closest('.thumb'); if (!t) return; const i = +t.dataset.i;
+      if (e.target.hasAttribute('data-x')) list.splice(i, 1);
+      else if (e.target.hasAttribute('data-l') && i > 0) list.splice(i - 1, 0, list.splice(i, 1)[0]);
+      else if (e.target.hasAttribute('data-r') && i < list.length - 1) list.splice(i + 1, 0, list.splice(i, 1)[0]);
+      else return;
+      draw();
+    });
+    box.addEventListener('input', e => { const t = e.target.closest('.thumb'); if (!t) return; const s = list[+t.dataset.i]; if (e.target.hasAttribute('data-alt')) s.alt = e.target.value; if (e.target.hasAttribute('data-flag')) s[opt.flag[0]] = e.target.checked; });
+    g.querySelector('input[type=file]').onchange = async e => {
+      const files = [...e.target.files]; e.target.value = '';
+      for (const f of files) { try { note(msg, f.name + ' 올리는 중…'); const url = await upload(f, opt.max); const it = { src: url }; if (opt.alt) it.alt = ''; list.push(it); draw(); } catch (err) { note(msg, '업로드 실패: ' + err.message, 'err'); return; } }
+      note(msg, '올렸습니다. 저장을 눌러 반영하세요.', 'ok');
+    };
+    g.querySelector('[data-save]').onclick = async () => {
+      if (!list.length) return note(msg, '사진이 한 장도 없으면 저장할 수 없습니다. 원래 구성으로 돌리려면 "원래대로" 를 누르세요.', 'err');
+      try { await save(opt.key, list); note(msg, SAVED, 'ok'); } catch (e) { note(msg, '저장 실패: ' + e.message, 'err'); }
+    };
+    g.querySelector('[data-reset]').onclick = async () => { if (!confirm('원래 사진 구성으로 되돌릴까요?')) return; try { await reset(opt.key); list = init(); draw(); note(msg, '원래대로 되돌렸습니다.', 'ok'); } catch (e) { alert(e.message); } };
+  }
+
+  // 메인 사진
+  function renderPhotos() {
+    const p = document.getElementById('p-photos');
+    p.innerHTML = '<h2>메인 사진</h2><p class="help">사진을 올리면 자동으로 크기를 줄여 저장합니다. 순서를 바꾸거나 지운 뒤 꼭 저장을 누르세요.</p>';
+    photoGroup(p, { key: 'slides.hero', title: '메인 첫 화면 슬라이드', help: '가로로 긴 사진이 좋습니다. 원본이 이미 어두운 사진은 "어두운 막 약하게" 를 켜세요.', def: defaults.slides['slides.hero'], max: 1920, flag: ['lite', '어두운 막 약하게'] });
+    photoGroup(p, { key: 'slides.fast', title: '시설 사진 흐르는 띠 (2줄)', help: '앞쪽 절반이 윗줄, 뒤쪽 절반이 아랫줄로 흐릅니다. 줄마다 5장 이상을 권합니다.', def: defaults.slides['slides.fast'], max: 1000 });
+    photoGroup(p, { key: 'slides.ba', title: '비포애프터 슬라이드', def: defaults.slides['slides.ba'], max: 1400, alt: true });
+  }
+
+  // 지점 시설 사진
+  function renderFac(k) {
+    const p = document.getElementById('p-fac');
+    p.innerHTML = '<h2>지점 시설 사진</h2><p class="help">지점 페이지의 존별 사진 슬라이드입니다. 존마다 저장 버튼이 따로 있습니다.</p>' + seg(k);
+    p.querySelectorAll('.seg button').forEach(b => b.onclick = () => renderFac(b.dataset.b));
+    ZONES.forEach(z => photoGroup(p, { key: 'fac.' + k + '.' + z[0], title: z[1], def: defaults.fac[k + '.' + z[0]], max: 1600, alt: true }));
+  }
+
+  // 방문 통계
+  async function renderStats() {
+    const p = document.getElementById('p-stats');
+    p.innerHTML = '<h2>방문 통계</h2><p class="msg">불러오는 중…</p>';
+    let s; try { s = await api('stats'); } catch (e) { p.querySelector('.msg').textContent = '불러오기 실패: ' + e.message; return; }
+    const max = Math.max(1, ...s.days.map(d => d.pv));
+    const NAMES = { '/': '메인', '/okgye': '옥계점', '/daegok': '대곡점', '/hyeonggok': '형곡점', '/bonggok': '봉곡점' };
+    const tbl = (rows, head, names) => '<table><thead><tr><th>' + head + '</th><th>조회</th></tr></thead><tbody>' + (rows.map(x => '<tr><td>' + esc(names && names[x[0]] ? names[x[0]] + ' (' + x[0] + ')' : x[0]) + '</td><td>' + x[1] + '</td></tr>').join('') || '<tr><td colspan="2">아직 기록이 없습니다</td></tr>') + '</tbody></table>';
+    p.innerHTML = '<h2>방문 통계</h2><p class="help">최근 30일 기준. 같은 브라우저가 같은 페이지를 30분 안에 다시 열면 한 번으로 셉니다. 관리자 페이지는 세지 않습니다.</p>' +
+      '<div class="stats"><div class="stat"><b>' + s.today.pv + '</b><span>오늘 조회</span><small>방문자 ' + s.today.uv + '명</small></div><div class="stat"><b>' + s.week.pv + '</b><span>최근 7일 조회</span><small>방문자 ' + s.week.uv + '명</small></div><div class="stat"><b>' + s.month.pv + '</b><span>최근 30일 조회</span><small>방문자 ' + s.month.uv + '명</small></div><div class="stat"><b>' + (s.month.pv ? Math.round(s.month.pv / 30 * 10) / 10 : 0) + '</b><span>하루 평균 조회</span><small>30일 기준</small></div></div>' +
+      '<div class="bars">' + s.days.map(d => '<div style="height:' + Math.round(d.pv / max * 100) + '%" title="' + d.day + ' · ' + d.pv + '"><i>' + d.pv + '</i></div>').join('') + '</div><div class="axis"><span>' + s.days[0].day.slice(5) + '</span><span>' + s.days[15].day.slice(5) + '</span><span>오늘</span></div>' +
+      '<div class="two"><div>' + tbl(s.pages, '페이지', NAMES) + '</div><div>' + tbl(s.refs, '유입 경로') + '</div></div>';
+  }
+
+  boot();
+})();
+</script>
+</body>
+</html>

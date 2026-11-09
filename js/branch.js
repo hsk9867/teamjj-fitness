@@ -1,3 +1,5 @@
+// 관리자에서 바꾼 내용(js/cms.js)이 적용된 뒤에 초기화한다
+(window.CMS_READY || Promise.resolve()).then(function () {
 (function () {
   // 모바일 메뉴
   var burger = document.getElementById('burger');
@@ -85,3 +87,4 @@
     update();
   });
 })();
+});

@@ -420,3 +420,9 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 @media (max-width: 860px) {
   .rev-card { flex-basis: 86%; padding: 20px 18px; }
 }
+
+/* ── 관리자(CMS) ── */
+/* 저장된 문구를 받아 오는 짧은 동안(최대 1.2초) 등장 효과가 있는 제목만 숨긴다 → 원래 문구가 깜빡이지 않게 */
+.cms-wait .hero-tit, .cms-wait .hero-sub, .cms-wait .bhero-tit, .cms-wait .intro-tit { visibility: hidden; }
+.panel-info dd em.sub { display: block; }
+.panel-info dd em.sub:empty { display: none; }

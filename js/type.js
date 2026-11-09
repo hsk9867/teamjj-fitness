@@ -2,6 +2,8 @@
    - .hero-tit / .bhero-tit / .big-tit : <br> 기준으로 줄을 나눠 아래에서 위로 차례로 올라오게 (.ln > span)
    - [data-words] : 단어 단위로 나눠 하나씩 떠오르게 (.w)
    - 히어로는 로드 직후, 나머지는 main.js/branch.js 의 IntersectionObserver 가 .in 을 붙일 때 재생 */
+// 관리자에서 바꾼 문구(js/cms.js)가 적용된 뒤에 실행한다
+(window.CMS_READY || Promise.resolve()).then(function () {
 (function () {
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -26,3 +28,4 @@
     else setTimeout(function () { hero.classList.add('in'); }, 120);
   }
 })();
+});
